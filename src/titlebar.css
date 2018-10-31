@@ -1,0 +1,15 @@
+separator {
+    background-color:#bcbfc6;
+}
+
+button:insensitive {
+    color:#bcbfc6;
+}
+
+button:hover {
+    color:#585b62;
+}
+
+button {
+    color:#585b62;
+}

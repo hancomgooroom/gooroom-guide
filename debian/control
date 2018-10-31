@@ -1,0 +1,13 @@
+Source: gooroom-guide
+Section: admin
+Priority: optional
+Maintainer: Gooroom Maintainers <gooroom@gooroom.kr>
+Build-Depends: debhelper (>= 9), xfce4-dev-tools, dh-autoreconf, gettext,
+ libwebkit2gtk-4.0-dev, libglib2.0-dev, libgtk-3-dev, intltool, libjsoncpp-dev
+Standards-Version: 3.9.8
+Homepage: https://git.gooroom.kr/gooroom-guide
+
+Package: gooroom-guide
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: The Gooroom Guide to provide convenience to users.

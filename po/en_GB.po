@@ -1,0 +1,42 @@
+# English(USA) translations for gooroom-guide package.
+# Copyright (C) 2018 THE gooroom-guide'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gooroom-guide package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gooroom-guide 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-12 23:13+0900\n"
+"PO-Revision-Date: 2018-09-12 23:13+0900\n"
+"Language-Team: Korean\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Gooroom Guide"
+msgstr "Gooroom Guide"
+
+msgid "Describes the features of the Gooroom platform"
+msgstr "Describes the features of the Gooroom platform."
+
+msgid "The cloud platform promises you a pleasant PC environment with lightweight and fast performance.\n The button on the top lets you see the basic usage environment of the cloud platform"
+msgstr "The cloud platform promises you a pleasant PC environment with lightweight and fast performance.\n The button on the top lets you see the basic usage environment of the cloud platform."
+
+msgid "Show program at Startup"
+msgstr "Show program at Startup"
+
+msgid "Thanks you for choosing Gooroom"
+msgstr "Thanks you for choosing Gooroom."
+
+msgid "You can begin the Gooroom platform"
+msgstr "You can begin the Gooroom platform."
+
+msgid "Website : <a href=\"https://www.gooroom.kr/\">https://www.gooroom.kr/</a>"
+msgstr "Website : <a href=\"https://www.gooroom.kr/\">https://www.gooroom.kr/</a>"
+
+msgid "The Gooroom Platform Online site allows you to see the various stories of the Gooroom"
+msgstr "The Gooroom Platform Online site allows you to see the various stories of the Gooroom."
+
+

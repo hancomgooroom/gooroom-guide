@@ -1,0 +1,40 @@
+# Korean translations for gooroom-guide package.
+# Copyright (C) 2018 THE gooroom-guide'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gooroom-guide package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gooroom-guide 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-12 01:53+0900\n"
+"PO-Revision-Date: 2018-09-12 01:53+0900\n"
+"Language-Team: Korean\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Gooroom Guide"
+msgstr "구름 도움말"
+
+msgid "Describes the features of the Gooroom platform"
+msgstr "구름 플랫폼의 기능들을 설명합니다."
+
+msgid "The cloud platform promises you a pleasant PC environment with lightweight and fast performance.\n The button on the top lets you see the basic usage environment of the cloud platform"
+msgstr "구름 플랫폼은 가볍고 빠른 성능으로 여러분의 쾌적한 PC환경을 약속 드립니다.\n상단의 버튼을 통해, 구름 플랫폼의 기본 사용환경을 확인할 수 있습니다."
+
+msgid "Show program at Startup"
+msgstr "시작할 때 이 창을 보여줌"
+
+msgid "Thanks you for choosing Gooroom"
+msgstr "구름 플랫폼을 선택해 주셔서 감사합니다."
+
+msgid "<b>You can begin the Gooroom platform</b>"
+msgstr "이제 구름 플랫폼을 시작할 수 있습니다."
+
+msgid "Website : <a href=\"https://www.gooroom.kr/\">https://www.gooroom.kr/</a>"
+msgstr "공식 웹사이트 : <a href=\"https://www.gooroom.kr/\">https://www.gooroom.kr/</a>"
+
+msgid "The Gooroom Platform Online site allows you to see the various stories of the Gooroom"
+msgstr "구름 플랫폼 온라인 사이트에서는 구름의 다양한 이야기를 확인할 수 있습니다."

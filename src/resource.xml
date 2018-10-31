@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/kr/gooroom/ui">
+        <file preprocess="xml-stripblanks">guide.ui</file>
+    </gresource>
+    <gresource prefix="/kr/gooroom/images">
+        <file>bg_start.jpg</file>
+        <file>logo_start.png</file>
+    </gresource>
+    <gresource prefix="/kr/gooroom/css">
+        <file>titlebar.css</file>
+    </gresource>
+</gresources>
