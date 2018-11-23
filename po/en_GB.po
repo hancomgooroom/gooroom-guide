@@ -21,14 +21,17 @@ msgstr "Gooroom Guide"
 msgid "Describes the features of the Gooroom platform"
 msgstr "Describes the features of the Gooroom platform."
 
+msgid "Thanks you for choosing Gooroom"
+msgstr "Thanks you for choosing Gooroom."
+
 msgid "The cloud platform promises you a pleasant PC environment with lightweight and fast performance.\n The button on the top lets you see the basic usage environment of the cloud platform"
 msgstr "The cloud platform promises you a pleasant PC environment with lightweight and fast performance.\n The button on the top lets you see the basic usage environment of the cloud platform."
 
 msgid "Show program at Startup"
 msgstr "Show program at Startup"
 
-msgid "Thanks you for choosing Gooroom"
-msgstr "Thanks you for choosing Gooroom."
+msgid "Getting Start"
+msgstr "Getting Start"
 
 msgid "You can begin the Gooroom platform"
 msgstr "You can begin the Gooroom platform."

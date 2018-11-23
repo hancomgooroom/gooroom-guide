@@ -8,21 +8,24 @@
     src: url('fonts/NanumGothic.ttf');
 }
 
-.nav_div {
+.home_box {
     margin-left:10px;
     margin-top:15px;
 }
 
-img.nav_home {
+img.home {
     width:35px;
     height:35px;
     content:url("images/home_icon.png");
 }
-div.nav_home {
+div.home {
     margin-top:-30px;
     margin-left:45px;
 }
-a.nav_home {
+a.home:before {
+    content:"시작화면으로";
+}
+a.home {
     color: #595959;
     font-size:20px;
     text-decoration:none;
@@ -30,34 +33,40 @@ a.nav_home {
     margin-left:3px;
 }
 
-div.nav_menu_box {
+div.menu_box {
     margin-top:40px;
     margin-left:50px;
 }
 
-img.nav_menu {
+img.menu {
     width:40px;
     height:40px;
 }
+
+div.menu {
+    margin-top:-34px;
+    margin-left:50px;
+}
+div.menu_lock {
+    margin-top:-30px;
+}
+
+a.menu:before {
+    content:"데스크톱 메뉴 둘러보기";
+}
+a.menu {
+    color:#595959;
+    font-size:19px;
+    margin-left:10px;
+    margin-top:-40px;
+}
+
 img.lock_icon {
     margin-top:-5px;
     content:url("images/lock_icon.png");
 }
 img.desktop_icon {
     content:url("images/desktop_icon.png");
-}
-div.nav_menu {
-    margin-top:-34px;
-    margin-left:50px;
-}
-div.nav_menu_lock {
-    margin-top:-30px;
-}
-a.nav_menu {
-    color:#595959;
-    font-size:19px;
-    margin-left:10px;
-    margin-top:-40px;
 }
 
 .title {
@@ -85,4 +94,46 @@ div.explain {
     margin-top:-310px;
     margin-left:430px;
     width:500px;
+}
+
+div.nav {
+    position:fixed;
+    margin-left:88%;
+    margin-top:20px;
+    width:80%;
+}
+
+div.nav_button {
+    background-color:#ffffff;
+    width:40px;
+    display:inline-block;
+    cursor:pointer;
+}
+
+div.nav_button:hover {
+    background-color:#c9c9c9;
+}
+
+a.prev {
+    display:inline-block;
+    /* By using an em scale, the arrows will size with the font */
+    width:0.4em;
+    height:0.4em;
+    border-right:0.2em solid black;
+    border-top:0.2em solid black;
+    transform:rotate(-135deg);
+    margin-right:0.6em;
+    margin-left:13px;
+}
+
+a.next {
+    display:inline-block;
+    /* By using an em scale, the arrows will size with the font */
+    width:0.4em;
+    height:0.4em;
+    border-right:0.2em solid black;
+    border-top:0.2em solid black;
+    transform:rotate(45deg);
+    margin-right:0.6em;
+    margin-left:4px;
 }

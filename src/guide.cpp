@@ -7,8 +7,6 @@
 #include <webkit2/webkit2.h>
 #include <glib/gi18n-lib.h>
 
-static std::string st;
-char* test = NULL;
 #define fopen_s(fp, fmt, mode)	*(fp)=fopen((fmt), (mode))
 
 // for label
@@ -16,6 +14,9 @@ typedef struct _FontStyle {
     char* family;
     GdkColor color;
     int size;
+    bool hasUnderline = TRUE;
+    bool isBold = FALSE;
+
 
     void setColor(guint16 red, guint16 green, guint16 blue)
     {
@@ -33,14 +34,25 @@ typedef struct _FontStyle {
     {
         this->family = family;
     }
+
+    void disableUnderline()
+    {
+        this->hasUnderline = FALSE;
+    }
+
+    void setBold(bool isBold)
+    {
+        this->isBold = isBold;
+    }
 }FontStyle;
 
 
 static GtkWidget* window = NULL;
 //static GtkBuilder* builder;
-static GtkWidget* btnPrev, *btnNext;
+static GtkWidget* btnUndo, *btnRedo;
 static GtkWidget* checkBox = NULL;
 static GtkWidget* alignment = NULL;
+static GtkWidget* headerBar = NULL;
 
 // gtk view
 static GtkWidget* beginPage = NULL;
@@ -52,11 +64,12 @@ static WebKitWebView* webView = NULL;
 static std::vector<std::string> filePaths = std::vector<std::string>();
 static std::string curUri;
 
-// page navi
-static int pageCnt = 0;
-static int pageSize = 0;
-
 static gboolean isShowAtBegin = TRUE;
+static gboolean isGtkView = TRUE;
+
+//cursor
+static GdkCursor* handCursor = NULL;
+static GdkCursor* defaultCursor = NULL;
 
 // Functions
 bool initUriList();
@@ -73,12 +86,11 @@ void changePageView(GtkWidget* hide, GtkWidget* show);
 
 //Callback
 void closeWindow(GtkWidget* widget, gpointer* data);
-void clickedPrev(GtkButton* button, gpointer data);
-void clickedNext(GtkButton* button, gpointer data);
+void clickedUndo(GtkButton* button, gpointer data);
+void clickedRedo(GtkButton* button, gpointer data);
 void checkShowAtBegin(GtkButton* button, gpointer data);
 void changedLoadWebPage(WebKitWebView* webview, WebKitLoadEvent loadEvent, gpointer data);
 void activate(GtkApplication* app);
-
 
 std::string getHomeDir()
 {
@@ -138,7 +150,6 @@ std::string getExpanduser()
     if (!g_file_test(expand.c_str(), G_FILE_TEST_EXISTS))
         mkdir(expand.c_str(), 0777);
 
-    //printf("= = = = => expand: %s\n", expand.c_str());
     return expand;
 }
 
@@ -167,8 +178,6 @@ bool initUriList()
         filePaths.push_back(str.c_str());
     }
 
-    pageSize = toc.size() + 1;
-
     return TRUE;
 }
 
@@ -186,47 +195,27 @@ void changePageView(GtkWidget* hide, GtkWidget* show)
     gtk_widget_show_all(show);
 }
 
-void clickedPrev(GtkButton* button, gpointer userData)
+void clickedUndo(GtkButton* button, gpointer userData)
 {
-    pageCnt--;
-    if (0 == pageCnt)
-    {
-        gtk_widget_set_sensitive(btnPrev, FALSE);
-        changePageView(webViewPage, beginPage);
-    }
-    else
-    {
-        if (pageSize == pageCnt + 1)
-        {
-            gtk_widget_set_sensitive(btnNext, TRUE);
-            changePageView(endPage, webViewPage);
+    printf("= = => undo func\n");
+    if (webkit_web_view_can_go_back(webView))
+       webkit_web_view_go_back(webView);
 
-            return;
-        }
+    if (0 == curUri.compare(filePaths[13]))
+        changePageView(endPage, webViewPage);
 
-        loadUri(pageCnt - 1);
-    }
+    if (0 == curUri.compare(filePaths[0]))
+        changePageView(beginPage, webViewPage);
 }
 
-void clickedNext(GtkButton* button, gpointer userData)
+void clickedRedo(GtkButton* button, gpointer userData)
 {
-    pageCnt++;
-    if (1 == pageCnt)
-    {
-        gtk_widget_set_sensitive(btnPrev, TRUE);
-        changePageView(beginPage, webViewPage);
-    }
-    else
-    {
-        if (pageSize == pageCnt)
-        {
-            gtk_widget_set_sensitive(btnNext, FALSE);
-            changePageView(webViewPage, endPage);
-            return;
-        }
+    printf("= = => redo func\n");
+    if (webkit_web_view_can_go_forward(webView))
+        webkit_web_view_go_forward(webView);
 
-        loadUri(pageCnt - 1);
-    }
+    if (0 == curUri.compare(filePaths[0]))
+        changePageView(beginPage, webViewPage);
 }
 
 void checkShowAtBegin(GtkButton* button, gpointer userData)
@@ -274,38 +263,23 @@ void changedLoadWebPage(WebKitWebView* webView, WebKitLoadEvent loadEvent, gpoin
         //case WEBKIT_LOAD_COMMITTED:
         //break;
         case WEBKIT_LOAD_FINISHED:
-            //gtk_widget_set_sensitive(btnPrev, webkit_web_view_can_go_back(webView));
-            //gtk_widget_set_sensitive(btnNext, webkit_web_view_can_go_forward(webView));
         {
+            gtk_widget_set_sensitive(btnUndo, webkit_web_view_can_go_back(webView));
+            gtk_widget_set_sensitive(btnRedo, webkit_web_view_can_go_forward(webView));
+
             const gchar* uri = webkit_web_view_get_uri(webView);
 
-            // 데스크탑 바로가기
-            if (0 == strcmp(uri, filePaths[1].c_str()) && 0 != curUri.compare(uri))
+            if (0 == strcmp(uri, filePaths[0].c_str()))
             {
-                pageCnt = 2;
-            }
-            // 보안프레임워크 바로가기
-            else if (0 == strcmp(uri, filePaths[10].c_str()) && 0 != curUri.compare(uri))
-            {
-                pageCnt = 11;
-            }
-            // 메뉴 바로가기
-            else if (0 == strcmp(uri, filePaths[0].c_str()) && !curUri.empty() &&
-             0 != strcmp(uri, curUri.c_str()))
-            {
-                pageCnt = 1;
-            }
-            // 시작화면 바로가기
-            else if (0 == curUri.compare(uri) && 0 != curUri.compare(filePaths[0].c_str()))
-            {
-                //printf("= = = = =>go to begin page \n");
-                uri = filePaths[0].c_str();
-                gtk_widget_set_sensitive(btnPrev, FALSE);
-                loadUri(0);
-
-                pageCnt = 0;
-
+                printf("= = = = => beginPage\n");
                 changePageView(webViewPage, beginPage);
+            }
+
+            if (0 == strcmp(uri, filePaths[13].c_str()))
+            {
+                printf("= = = = => endPage\n");
+                gtk_widget_set_sensitive(btnRedo, FALSE);
+                changePageView(webViewPage, endPage);
             }
 
             curUri.clear();
@@ -322,19 +296,14 @@ void createWebView()
     webViewPage = gtk_frame_new(NULL);
     webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
 
-    GdkRGBA rgba;
-
-//    rgba.red = 0.949;
-//    rgba.green = 0;//0.949;
-//    rgba.blue = 0;//0.949;
-//    rgba.alpha = 1;
-//    webkit_web_view_set_background_color(webView, &rgba);
     gtk_container_add(GTK_CONTAINER(webViewPage), GTK_WIDGET(webView));
 
     g_signal_connect(webView, "load-changed", G_CALLBACK(changedLoadWebPage), NULL);
 
     loadUri(0);
     gtk_widget_grab_focus(GTK_WIDGET(webView));
+
+    gtk_container_add(GTK_CONTAINER(alignment), webViewPage);
 }
 
 void setLabelAttributeEx(GtkLabel* label, FontStyle* style)
@@ -349,13 +318,28 @@ void setLabelAttributeEx(GtkLabel* label, FontStyle* style)
     {
         pango_font_description_set_family(df, style->family);
     }
+
     if (style->size != 0)
     {
         pango_font_description_set_size(df, style->size * PANGO_SCALE);
-        atFont = pango_attr_font_desc_new(df);
+    }
+
+    if (!style->hasUnderline)
+    {
+        PangoUnderline pul = PANGO_UNDERLINE_NONE;
+
+        pango_attr_list_insert(attrList, pango_attr_underline_new(pul));
+    }
+
+    if (style->isBold)
+    {
+        PangoWeight pw = PANGO_WEIGHT_BOLD;
+
+        pango_attr_list_insert(attrList, pango_attr_weight_new(pw));
     }
 
     atColor = pango_attr_foreground_new(style->color.red, style->color.green, style->color.blue);
+    atFont = pango_attr_font_desc_new(df);
 
     pango_attr_list_insert(attrList, atFont);
     pango_attr_list_insert(attrList, atColor);
@@ -364,10 +348,34 @@ void setLabelAttributeEx(GtkLabel* label, FontStyle* style)
     pango_attr_list_unref(attrList);
 }
 
+void clickedStart(GtkButton* button, gpointer data)
+{
+    gtk_widget_set_sensitive(btnUndo, TRUE);
+    loadUri(1);
+    changePageView(beginPage, webViewPage);
+}
+
+static gboolean onChangeCursorInButton(GtkWidget* button, GdkEventCrossing* event)
+{
+    if (event->type == GDK_ENTER_NOTIFY)
+        gdk_window_set_cursor(gtk_widget_get_window(button), handCursor);
+    else if (event->type == GDK_LEAVE_NOTIFY)
+        gdk_window_set_cursor(gtk_widget_get_window(button), defaultCursor);
+}
+
 void createBeginPage()
 {
     beginPage = gtk_layout_new(NULL, NULL);
 
+    //gtk_container_add(GTK_CONTAINER(alignment), beginPage);
+
+    GtkCssProvider* cssp = gtk_css_provider_new();
+    gtk_css_provider_load_from_resource(cssp, "/kr/gooroom/css/gtkview.css");
+
+    gtk_widget_set_halign(beginPage, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(beginPage, GTK_ALIGN_FILL);
+
+    // 배경화면
     GtkWidget* image = gtk_image_new_from_resource("/kr/gooroom/images/bg_start.jpg");
     gtk_layout_put(GTK_LAYOUT(beginPage), image, 0, 0);
 
@@ -378,40 +386,62 @@ void createBeginPage()
     pixbuf = gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_BILINEAR);
     gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
 
+    g_object_unref(pixbuf);
+
+
     GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_container_add(GTK_CONTAINER(beginPage), box);
+    gtk_widget_set_size_request(box, width, height);
+
+    GtkWidget* childBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_box_pack_start(GTK_BOX(box), childBox, FALSE, FALSE, 50);
+
 
     GtkWidget* logo = gtk_image_new_from_resource("/kr/gooroom/images/logo_start.png");
-    GdkPixbuf* logoBuf = gtk_image_get_pixbuf(GTK_IMAGE(logo));
-    gtk_box_pack_start(GTK_BOX(box), logo, FALSE, FALSE, 30);
-
-    gint lw = gdk_pixbuf_get_width(logoBuf);
-    gint lh = gdk_pixbuf_get_height(logoBuf);
-
-    gdouble logo_xp = (width - lw) / 3;
-    gdouble logo_yp = lh / 2 + 10;
-    gtk_layout_put(GTK_LAYOUT(beginPage), box, logo_xp, logo_yp);
+    gtk_box_pack_start(GTK_BOX(childBox), logo, FALSE, FALSE, 30);
+    gtk_widget_set_halign(logo, GTK_ALIGN_CENTER);
 
     GtkWidget* text1 = gtk_label_new(_("Thanks you for choosing Gooroom"));
-    FontStyle style;
-    style.setColor(0xffff, 0xffff, 0xffff);
-    style.setSize(18);
-    setLabelAttributeEx(GTK_LABEL(text1), &style);
-    gtk_box_pack_start(GTK_BOX(box), text1, TRUE, FALSE, 8);
+    gtk_widget_set_name(text1, "beginpage_text1");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(text1), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_box_pack_start(GTK_BOX(childBox), text1, TRUE, FALSE, 8);
 
-    GtkWidget* text2 = gtk_label_new(_("The cloud platform promises you a pleasant PC environment with lightweight and fast performance.\n The button on the top lets you see the basic usage environment of the cloud platform"));
-    gtk_label_set_justify(GTK_LABEL(text2), GTK_JUSTIFY_CENTER);
-    style.setSize(14);
-    setLabelAttributeEx(GTK_LABEL(text2), &style);
-    gtk_box_pack_start(GTK_BOX(box), text2, TRUE, FALSE, 8);
+    GtkWidget* text2 = gtk_label_new(_("The cloud platform promises you a pleasant PC environment with lightweight and fast performance.\n Use the buttons below to see the basic usage of the cloud platform."));
+    gtk_widget_set_name(text2, "beginpage_text2");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(text2), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_box_pack_start(GTK_BOX(childBox), text2, TRUE, FALSE, 8);
 
+    // 시작하기 버튼
+    GtkWidget* startButton = gtk_button_new();
+    gtk_box_pack_start(GTK_BOX(childBox), startButton, FALSE, FALSE, 14);
+    gtk_widget_set_halign(startButton, GTK_ALIGN_CENTER);
+
+    gtk_widget_set_name(startButton, "startbutton");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(startButton), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    GtkWidget* subLabel = gtk_label_new(_("Getting Start"));
+    gtk_widget_set_name(subLabel, "gettingstart");
+    gtk_container_add(GTK_CONTAINER(startButton), subLabel);
+    gtk_style_context_add_provider(gtk_widget_get_style_context(subLabel), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    GdkDisplay* d = gtk_widget_get_display(window);
+    handCursor = gdk_cursor_new_from_name(d, "pointer");
+    defaultCursor = gdk_cursor_new_from_name(d, "default");
+
+    g_signal_connect(startButton, "clicked", G_CALLBACK(clickedStart), NULL);
+    g_signal_connect(startButton, "enter-notify-event", G_CALLBACK(onChangeCursorInButton), NULL);
+    g_signal_connect(startButton, "leave-notify-event", G_CALLBACK(onChangeCursorInButton), NULL);
+
+    // 부팅 시 마다 확인
     checkBox = gtk_check_button_new();
     GtkWidget* checkLabel = gtk_label_new(_("Show program at Startup"));
-    style.setSize(12);
-    setLabelAttributeEx(GTK_LABEL(checkLabel), &style);
+    gtk_widget_set_name(checkLabel, "checklabel");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(checkLabel), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
     gtk_container_add(GTK_CONTAINER(checkBox), checkLabel);
 
-    gtk_box_pack_start(GTK_BOX(box), checkBox, TRUE, FALSE, 10);
-    gtk_widget_set_halign(checkBox, GTK_ALIGN_CENTER);
+    gtk_box_pack_end(GTK_BOX(box), checkBox, FALSE, TRUE, 0);
+    gtk_widget_set_halign(checkBox, GTK_ALIGN_END);
+    gtk_widget_set_valign(checkBox, GTK_ALIGN_END);
 
     g_signal_connect(checkBox, "toggled", G_CALLBACK(checkShowAtBegin), NULL);
 
@@ -423,47 +453,64 @@ void createBeginPage()
         isShowAtBegin = FALSE;
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkBox), isShowAtBegin);
-    gtk_container_add(GTK_CONTAINER(alignment), beginPage);
 }
 
 void createEndPage()
 {
     endPage = gtk_layout_new(NULL, NULL);
 
+    GtkCssProvider* cssp = gtk_css_provider_new();
+    gtk_css_provider_load_from_resource(cssp, "/kr/gooroom/css/gtkview.css");
+
     GtkWidget* image = gtk_image_new_from_resource("/kr/gooroom/images/bg_start.jpg");
     gtk_layout_put(GTK_LAYOUT(endPage), image, 0, 0);
 
+    // 배경화면 
     GdkPixbuf* pixbuf = gtk_image_get_pixbuf(GTK_IMAGE(image));
     gint width, height;
     gtk_window_get_size(GTK_WINDOW(window), &width, &height);
 
     pixbuf = gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_BILINEAR);
     gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
+    g_object_unref(pixbuf);
 
     GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_layout_put(GTK_LAYOUT(endPage), box, 140, 140);
+    gtk_container_add(GTK_CONTAINER(endPage), box);
+    gtk_widget_set_size_request(box, width, height);
+
+    GtkWidget* childBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_box_pack_start(GTK_BOX(box), childBox, FALSE, FALSE, 90);
+
 
     GtkWidget* text1 = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(text1), _("<b>You can begin the Gooroom platform</b>"));
+    gtk_label_set_markup(GTK_LABEL(text1), _("You can begin the Gooroom platform"));
+    gtk_widget_set_name(text1, "endpage_text1");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(text1), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_box_pack_start(GTK_BOX(childBox), text1, TRUE, FALSE, 40);
+    gtk_widget_set_halign(text1, GTK_ALIGN_CENTER);
+
+    GtkWidget* text2 = gtk_label_new("test");
+    gtk_label_set_markup(GTK_LABEL(text2), _("Website : <a href=\"https://www.gooroom.kr/\">https://www.gooroom.kr/</a>"));
+    gtk_widget_set_name(text2, "endpage_text2");
+//    gtk_style_context_add_provider(gtk_widget_get_style_context(text2), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    gtk_label_set_justify(GTK_LABEL(text2), GTK_JUSTIFY_CENTER);
     FontStyle style;
     style.setColor(0xffff, 0xffff, 0xffff);
-    style.setSize(30);
-    setLabelAttributeEx(GTK_LABEL(text1), &style);
-    gtk_box_pack_start(GTK_BOX(box), text1, TRUE, FALSE, 7);
-
-    GtkWidget* text2 = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(text2), _("Website : <a href=\"https://www.gooroom.kr/\">https://www.gooroom.kr/</a>"));
-    gtk_label_set_justify(GTK_LABEL(text2), GTK_JUSTIFY_CENTER);
-    style.setSize(18);
+    style.setBold(TRUE);
+    style.setSize(16);
     setLabelAttributeEx(GTK_LABEL(text2), &style);
-    gtk_box_pack_start(GTK_BOX(box), text2, TRUE, FALSE, 20);
+
+    gtk_box_pack_start(GTK_BOX(childBox), text2, TRUE, FALSE, 8);
+    gtk_widget_set_halign(text2, GTK_ALIGN_CENTER);
 
     GtkWidget* text3 = gtk_label_new(_("The Gooroom Platform Online site allows you to see the various stories of the Gooroom"));
+    gtk_widget_set_name(text3, "endpage_text3");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(text3), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
     gtk_label_set_justify(GTK_LABEL(text3), GTK_JUSTIFY_CENTER);
-    style.setColor(0xffff, 0xffff, 0xffff);
-    style.setSize(16);
-    setLabelAttributeEx(GTK_LABEL(text3), &style);
-    gtk_box_pack_start(GTK_BOX(box), text3, TRUE, FALSE, 7);
+
+    gtk_box_pack_start(GTK_BOX(childBox), text3, TRUE, FALSE, 3);
+    gtk_widget_set_halign(text3, GTK_ALIGN_CENTER);
 }
 
 void createGtkView()
@@ -474,7 +521,6 @@ void createGtkView()
 
 void activate(GtkApplication* app)
 {
-    GtkWidget* headerBar = NULL;
     GtkWidget* box;
     GError* err = NULL;
 
@@ -491,36 +537,25 @@ void activate(GtkApplication* app)
 
     box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 
-    btnPrev = gtk_button_new_with_label("<");
-//    GtkWidget* labelPrev = gtk_label_new("<");
-//    FontStyle style;
-//    style.setColor(0x33ff, 0x33ff, 0x33ff);
-//    style.setSize(12);
-//    setLabelAttributeEx(GTK_LABEL(prevLabel), &style);
-//    gtk_container_add(GTK_CONTAINER(btnPrev), labelPrev);
+    btnUndo = gtk_button_new_with_label("<");
     GtkCssProvider* cssp = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(cssp, "/kr/gooroom/css/titlebar.css");
-    gtk_style_context_add_provider(gtk_widget_get_style_context(btnPrev), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_style_context_add_provider(gtk_widget_get_style_context(btnUndo), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
-    btnNext = gtk_button_new_with_label(">");
-//    GtkWidget* labelNext = gtk_label_new(">");
-//    setLabelAttributeEx(GTK_LABEL(nextLabel), &style);
-//    gtk_container_add(GTK_CONTAINER(btnNext), labelNext);
+    btnRedo = gtk_button_new_with_label(">");
+    gtk_style_context_add_provider(gtk_widget_get_style_context(btnRedo), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
-    gtk_style_context_add_provider(gtk_widget_get_style_context(btnNext), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_widget_set_sensitive(btnUndo, FALSE);
+    gtk_widget_set_sensitive(btnRedo, FALSE);
 
-    gtk_widget_set_sensitive(btnPrev, FALSE);
-    gtk_widget_set_sensitive(btnNext, TRUE);
+    g_signal_connect(btnUndo, "clicked", G_CALLBACK(clickedUndo), NULL);
+    g_signal_connect(btnRedo, "clicked", G_CALLBACK(clickedRedo), NULL);
 
-    g_signal_connect(btnPrev, "clicked", G_CALLBACK(clickedPrev), NULL);
-    g_signal_connect(btnNext, "clicked", G_CALLBACK(clickedNext), NULL);
-
-    gtk_box_pack_start(GTK_BOX(box), btnPrev, FALSE, FALSE, 3);
-    gtk_box_pack_end(GTK_BOX(box), btnNext, TRUE, FALSE, 3);
+    gtk_box_pack_start(GTK_BOX(box), btnUndo, FALSE, FALSE, 3);
+    gtk_box_pack_end(GTK_BOX(box), btnRedo, TRUE, FALSE, 3);
 
     GtkWidget* separator = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
-//    GtkCssProvider* cssp = gtk_css_provider_new();
-//    gtk_css_provider_load_from_resource(cssp, "/kr/gooroom/css/titlebar.css");
+    gtk_widget_set_name(separator, "separator");
     gtk_style_context_add_provider(gtk_widget_get_style_context(separator), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
     gtk_box_pack_end(GTK_BOX(box), separator, FALSE, FALSE, 3);
@@ -545,9 +580,6 @@ void activate(GtkApplication* app)
 
 int main(int argc, char **argv)
 {
-    // FIXME: home 경로에 있는 .gooroom 폴더 제거 (정식 배포 시 제거해야함)
-    removeBeforeExpand();
-
     if (NULL != argv[1])
     {
         if (0 == strcmp(argv[1], "autostart"))
@@ -566,6 +598,8 @@ int main(int argc, char **argv)
 
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
     g_application_run(G_APPLICATION(app), 0, &argv[0]);
+
+    printf("= = =>end\n");
 
     return 1;
 }

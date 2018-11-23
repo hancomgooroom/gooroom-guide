@@ -1,0 +1,40 @@
+label {
+    color:#ffffff;
+    font-size:15px;
+}
+
+#gettingstart {
+    font-weight:bold;
+    font-size:16px;
+}
+
+#beginpage_text1 {
+    font-size:25px;
+}
+
+#beginpage_text2 {
+    font-size:20px;
+}
+
+#checklabel {
+    font-size:18px;
+}
+
+#startbutton {
+    background:translation;
+    border-width:0px;:
+}
+
+
+#endpage_text1 {
+    font-size:35px;
+    font-weight:bold;
+}
+
+#endpage_text2 {
+    font-size:24px;
+}
+
+#endpage_text3 {
+    font-size:20px;
+}

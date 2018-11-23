@@ -2,7 +2,7 @@ SUBDIRS = scalable
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
-install-data-hook:	\
+install-data-hook:
 	@-if test -z "$(DESTDIR)"; then			\
 		echo "Updating Gtk icon cache.";	\
 			$(gtk_update_icon_cache);	\

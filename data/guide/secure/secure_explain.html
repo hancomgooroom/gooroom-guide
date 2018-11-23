@@ -4,27 +4,31 @@
     <link rel="stylesheet" href="secure_common.css">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <div class="nav_div">
-            <img class="nav_home">
-                <div class="nav_home">
-                    <a class="nav_home" href="secure_explain.html">
-                        시작화면으로
-                    </a>
-                </div>
+    </head>
+    <body>
+        <div class="nav">
+            <div class="nav_button" align=center onclick="location.href='./secure_list.html'">
+                <a class="prev"></a>
+            </div>
+            <div class="nav_button" align=center onclick="location.href='../intro/end.html'">
+                <a class="next"></a>
+            </div>
         </div>
-        <div class="nav_menu_box">
-            <img class="nav_menu lock_icon">
-            <div class="nav_menu nav_menu_lock">
-                 <a class="nav_menu" href="../intro/menus.html">
-                    보안 프레임워크 살펴보기
-                 </a>
+        <div class="home_box">
+            <img class="home">
+            <div class="home">
+                <a class="home" href="../intro/home.html"></a>
+            </div>
+        </div>
+        <div class="menu_box">
+            <img class="menu lock_icon">
+            <div class="menu menu_lock">
+                 <a class="menu" href="../intro/menus.html"></a>
             </div>
         </div>
         <div class="title">
             <p>구름 보안 프레임워크</p>
         </div>
-    </head>
-    <body>
         <div style="margin-top:-35px">
             <div style="display:inline-block; margin-top:150px; vertical-align: top;">
                 <img src="../images/secure_icon.png" style="width:200px; height:auto;">
@@ -67,8 +71,8 @@
                     <div style="display:inline-block; vertical-align:top; margin-left:15px;">
                         <p class="secure_subtitle">커널 영역 보호</p>
                         <p class="secure_exp">커널 레벨 루트킷 방어 및 실시간 악성 코드 공격 탐지 및 차단<br>
-                            - 커널 의 정적 영역(읽기 전용 데이터 혹은 모듈) 변조 감지<br>
-                            - 커널 동적 영역(커널 프로세스, 동적 모듈) 보호<br>
+                            - Kernel의 정적 영역(읽기 전용 데이터 혹은 모듈) 변조 감지<br>
+                            - Kernel 동적 영역(커널 프로세스, 동적 모듈) 보호<br>
                             - 실시간 악성코드 공격 탐지 및 차단</p>
                     </div>
                 </div>

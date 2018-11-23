@@ -3,8 +3,11 @@ p.secure_subtitle
     font-size:15px;
     font-weight:bold;
 }
-
 p.secure_exp
 {
     font-size:13px;
+}
+
+a.menu:before {
+    content:"보안 프레임워크 살펴보기";
 }

@@ -1,5 +1,6 @@
 {
     "paths" : [
+        "/intro/home.html",
         "/intro/menus.html",
         "/desktop/taskbar.html",
         "/desktop/launcher.html",
@@ -11,6 +12,7 @@
         "/desktop/default_setting3.html",
         "/desktop/system_setting.html",
         "/secure/secure_list.html",
-        "/secure/secure_explain.html"
+        "/secure/secure_explain.html",
+        "/intro/end.html"
     ]
 }
