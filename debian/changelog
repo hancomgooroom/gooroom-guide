@@ -1,3 +1,12 @@
+gooroom-guide (0.2.2+grm1u1) unstable; urgency=medium
+
+  [ HaeRyong Jeong ]
+  * [137d020c] fixed auto start routine
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Wed, 16 Jan 2019 12:06:20 +0900
+
 gooroom-guide (0.2.1+grm1u1) unstable; urgency=medium
 
   [ HaeRyong Jeong ]
