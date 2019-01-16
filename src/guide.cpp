@@ -85,7 +85,7 @@ void loadUri(int index);
 void changePageView(GtkWidget* hide, GtkWidget* show);
 
 //Callback
-void closeWindow(GtkWidget* widget, gpointer* data);
+//void closeWindow(GtkWidget* widget, gpointer* data);
 void clickedUndo(GtkButton* button, gpointer data);
 void clickedRedo(GtkButton* button, gpointer data);
 void checkShowAtBegin(GtkButton* button, gpointer data);
@@ -221,10 +221,7 @@ void clickedRedo(GtkButton* button, gpointer userData)
 void checkShowAtBegin(GtkButton* button, gpointer userData)
 {
     isShowAtBegin = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-}
-
-void closeWindow(GtkWidget* widget, gpointer* data)
-{
+    // FIXME: memory destroy 될 때 저장도되록 수정해야함
     std::string expand = getExpanduser();
 
     if (!g_file_test(expand.c_str(), G_FILE_TEST_IS_DIR))
@@ -250,7 +247,12 @@ void closeWindow(GtkWidget* widget, gpointer* data)
             remove(expand.c_str());
         }
     }
+
 }
+
+//void closeWindow(GtkWidget* widget, gpointer* data)
+//{
+//}
 
 void changedLoadWebPage(WebKitWebView* webView, WebKitLoadEvent loadEvent, gpointer userData)
 {
@@ -529,7 +531,7 @@ void activate(GtkApplication* app)
 
     window = (GtkWidget*)gtk_builder_get_object(builder, "guide-window");
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
-    g_signal_connect(window, "destroy", G_CALLBACK(closeWindow), NULL);
+    //g_signal_connect(window, "destroy", G_CALLBACK(closeWindow), NULL);
 
     headerBar = gtk_header_bar_new();
 
