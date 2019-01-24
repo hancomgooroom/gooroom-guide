@@ -9,5 +9,5 @@ Homepage: https://git.gooroom.kr/gooroom-guide
 
 Package: gooroom-guide
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, libgl1-mesa-dri
 Description: The Gooroom Guide to provide convenience to users.

@@ -85,7 +85,6 @@ void loadUri(int index);
 void changePageView(GtkWidget* hide, GtkWidget* show);
 
 //Callback
-//void closeWindow(GtkWidget* widget, gpointer* data);
 void clickedUndo(GtkButton* button, gpointer data);
 void clickedRedo(GtkButton* button, gpointer data);
 void checkShowAtBegin(GtkButton* button, gpointer data);
@@ -197,7 +196,6 @@ void changePageView(GtkWidget* hide, GtkWidget* show)
 
 void clickedUndo(GtkButton* button, gpointer userData)
 {
-    printf("= = => undo func\n");
     if (webkit_web_view_can_go_back(webView))
        webkit_web_view_go_back(webView);
 
@@ -210,7 +208,6 @@ void clickedUndo(GtkButton* button, gpointer userData)
 
 void clickedRedo(GtkButton* button, gpointer userData)
 {
-    printf("= = => redo func\n");
     if (webkit_web_view_can_go_forward(webView))
         webkit_web_view_go_forward(webView);
 
@@ -221,7 +218,6 @@ void clickedRedo(GtkButton* button, gpointer userData)
 void checkShowAtBegin(GtkButton* button, gpointer userData)
 {
     isShowAtBegin = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-    // FIXME: memory destroy 될 때 저장도되록 수정해야함
     std::string expand = getExpanduser();
 
     if (!g_file_test(expand.c_str(), G_FILE_TEST_IS_DIR))
@@ -250,10 +246,6 @@ void checkShowAtBegin(GtkButton* button, gpointer userData)
 
 }
 
-//void closeWindow(GtkWidget* widget, gpointer* data)
-//{
-//}
-
 void changedLoadWebPage(WebKitWebView* webView, WebKitLoadEvent loadEvent, gpointer userData)
 {
     switch (loadEvent)
@@ -272,14 +264,10 @@ void changedLoadWebPage(WebKitWebView* webView, WebKitLoadEvent loadEvent, gpoin
             const gchar* uri = webkit_web_view_get_uri(webView);
 
             if (0 == strcmp(uri, filePaths[0].c_str()))
-            {
-                printf("= = = = => beginPage\n");
                 changePageView(webViewPage, beginPage);
-            }
 
             if (0 == strcmp(uri, filePaths[13].c_str()))
             {
-                printf("= = = = => endPage\n");
                 gtk_widget_set_sensitive(btnRedo, FALSE);
                 changePageView(webViewPage, endPage);
             }
@@ -368,8 +356,6 @@ static gboolean onChangeCursorInButton(GtkWidget* button, GdkEventCrossing* even
 void createBeginPage()
 {
     beginPage = gtk_layout_new(NULL, NULL);
-
-    //gtk_container_add(GTK_CONTAINER(alignment), beginPage);
 
     GtkCssProvider* cssp = gtk_css_provider_new();
     gtk_css_provider_load_from_resource(cssp, "/kr/gooroom/css/gtkview.css");
@@ -494,7 +480,6 @@ void createEndPage()
     GtkWidget* text2 = gtk_label_new("test");
     gtk_label_set_markup(GTK_LABEL(text2), _("Website : <a href=\"https://www.gooroom.kr/\">https://www.gooroom.kr/</a>"));
     gtk_widget_set_name(text2, "endpage_text2");
-//    gtk_style_context_add_provider(gtk_widget_get_style_context(text2), GTK_STYLE_PROVIDER(cssp), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
     gtk_label_set_justify(GTK_LABEL(text2), GTK_JUSTIFY_CENTER);
     FontStyle style;
@@ -531,7 +516,6 @@ void activate(GtkApplication* app)
 
     window = (GtkWidget*)gtk_builder_get_object(builder, "guide-window");
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
-    //g_signal_connect(window, "destroy", G_CALLBACK(closeWindow), NULL);
 
     headerBar = gtk_header_bar_new();
 
@@ -600,8 +584,6 @@ int main(int argc, char **argv)
 
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
     g_application_run(G_APPLICATION(app), 0, &argv[0]);
-
-    printf("= = =>end\n");
 
     return 1;
 }
