@@ -1,3 +1,12 @@
+gooroom-guide (0.2.3+grm1u1) unstable; urgency=medium
+
+  [ HaeRyong Jeong ]
+  * [6edf34ea] add dependency library
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Wed, 30 Jan 2019 11:40:14 +0900
+
 gooroom-guide (0.2.2+grm1u1) unstable; urgency=medium
 
   [ HaeRyong Jeong ]
