@@ -52,7 +52,7 @@ div.menu_lock {
 }
 
 a.menu:before {
-    content:"데스크톱 메뉴 둘러보기";
+    content:"메뉴 둘러보기";
 }
 a.menu {
     color:#595959;
@@ -63,7 +63,7 @@ a.menu {
 
 img.lock_icon {
     margin-top:-5px;
-    content:url("images/lock_icon.png");
+    content:url("images/desktop_icon.png");
 }
 img.desktop_icon {
     content:url("images/desktop_icon.png");
