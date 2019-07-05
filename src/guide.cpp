@@ -91,6 +91,9 @@ void checkShowAtBegin(GtkButton* button, gpointer data);
 void changedLoadWebPage(WebKitWebView* webview, WebKitLoadEvent loadEvent, gpointer data);
 void activate(GtkApplication* app);
 
+// popup-menu
+gboolean callWebViewContext(WebKitWebView* web_view, WebKitContextMenu* context_menu, GdkEvent* e, WebKitHitTestResult* htr, gpointer user_data);
+
 std::string getHomeDir()
 {
     std::string dir = g_get_home_dir();
@@ -279,6 +282,11 @@ void changedLoadWebPage(WebKitWebView* webView, WebKitLoadEvent loadEvent, gpoin
     }
 }
 
+gboolean callWebViewContext(WebKitWebView* web_view, WebKitContextMenu* context_menu, GdkEvent* e, WebKitHitTestResult* htr, gpointer user_data)
+{
+    return true;
+}
+
 void createWebView()
 {
     initUriList();
@@ -289,6 +297,7 @@ void createWebView()
     gtk_container_add(GTK_CONTAINER(webViewPage), GTK_WIDGET(webView));
 
     g_signal_connect(webView, "load-changed", G_CALLBACK(changedLoadWebPage), NULL);
+    g_signal_connect(webView, "context-menu", G_CALLBACK(callWebViewContext), NULL);
 
     loadUri(0);
     gtk_widget_grab_focus(GTK_WIDGET(webView));
@@ -428,6 +437,7 @@ void createBeginPage()
     gtk_container_add(GTK_CONTAINER(checkBox), checkLabel);
 
     gtk_box_pack_end(GTK_BOX(box), checkBox, FALSE, TRUE, 0);
+    gtk_widget_set_margin_end(checkBox, 10);
     gtk_widget_set_halign(checkBox, GTK_ALIGN_END);
     gtk_widget_set_valign(checkBox, GTK_ALIGN_END);
 
