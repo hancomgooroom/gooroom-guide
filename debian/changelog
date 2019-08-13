@@ -1,13 +1,3 @@
-gooroom-guide (0.2.4+grm1u1) unstable; urgency=medium
-
-  [ HaeRyong Jeong ]
-  * [df0bc7ab] modified translation
-  * [be785f96] [Bug:767,769] Disable context menu for image and Change secure html
-
-  [ Gooroom Autobuilder ]
-
- -- Gooroom Autobuilder <jenkins@gooroom.kr>  Tue, 23 Jul 2019 18:43:16 +0900
-
 gooroom-guide (0.2.3+grm1u1) unstable; urgency=medium
 
   [ HaeRyong Jeong ]

@@ -1,18 +1,14 @@
 {
-    "paths" : [
-        "/intro/home.html",
-        "/intro/menus.html",
-        "/desktop/taskbar.html",
-        "/desktop/launcher.html",
-        "/desktop/explore.html",
-        "/desktop/browser.html",
-        "/desktop/update_manager.html",
-        "/desktop/default_setting1.html",
-        "/desktop/default_setting2.html",
-        "/desktop/default_setting3.html",
-        "/desktop/system_setting.html",
-        "/secure/secure_list.html",
-        "/secure/secure_explain.html",
-        "/intro/end.html"
+    "paths":[
+        "/intro.html",
+        "/feature.html",
+        "/component.html",
+        "/desktop.html",
+        "/dockbar.html",
+        "/launcher.html",
+        "/software-center.html",
+        "/browser.html",
+        "/secure-framework.html",
+        "/end.html"
     ]
 }

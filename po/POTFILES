@@ -1,0 +1,3 @@
+	../data/gooroom-guide.desktop.in \
+	../src/guide.cpp \
+	../src/guide.ui
