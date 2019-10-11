@@ -27,7 +27,7 @@
                 <property name="margin_left">17</property>
                 <property name="margin_top">4</property>
                 <property name="margin_bottom">4</property>
-                <property name="label" translatable="yes">구름 사용 설명서</property>
+                <property name="label" translatable="yes">Gooroom Guide</property>
               </object>
             </child>
           </object>
@@ -80,7 +80,7 @@
                 <property name="margin_bottom">10</property>
                 <child>
                   <object class="GtkCheckButton" id="auto-start-check">
-                    <property name="label" translatable="yes">시작할 때 실행하기</property>
+                    <property name="label" translatable="yes">Run at startup</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -95,7 +95,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="begin-button">
-                    <property name="label" translatable="yes">시작하기</property>
+                    <property name="label" translatable="yes">Start</property>
                     <property name="width_request">100</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -112,7 +112,7 @@
               </object>
               <packing>
                 <property name="name">page0</property>
-                <property name="title" translatable="yes">page0</property>
+                <property name="title" translatable="no">page0</property>
               </packing>
             </child>
             <child>
@@ -123,7 +123,7 @@
                 <property name="margin_bottom">10</property>
                 <child>
                   <object class="GtkButton" id="prev-button">
-                    <property name="label" translatable="yes">&lt; 이전으로</property>
+                    <property name="label" translatable="yes">&lt; Prev</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -147,7 +147,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="next-button">
-                    <property name="label" translatable="yes">다음으로 &gt;</property>
+                    <property name="label" translatable="yes">Next &gt;</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -161,7 +161,7 @@
               </object>
               <packing>
                 <property name="name">page1</property>
-                <property name="title" translatable="yes">page1</property>
+                <property name="title" translatable="no">page1</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -173,7 +173,7 @@
                 <property name="margin_bottom">10</property>
                 <child>
                   <object class="GtkButton" id="prev-button1">
-                    <property name="label" translatable="yes">&lt; 이전으로</property>
+                    <property name="label" translatable="yes">&lt; Prev</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -187,7 +187,7 @@
               </object>
               <packing>
                 <property name="name">page2</property>
-                <property name="title" translatable="yes">page2</property>
+                <property name="title" translatable="no">page2</property>
                 <property name="position">2</property>
               </packing>
             </child>

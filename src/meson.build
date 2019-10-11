@@ -17,7 +17,8 @@ i18n.merge_file(
 
 cflags = [
   '-DPACKAGE_GUIDEDIR="@0@"'.format(join_paths(guide_datadir, 'gooroom-guide', 'guide')),
-  '-DTESTDIR="@0@"'.format(join_paths(guide_sysconfdir, 'xdg', 'autostart'))
+  '-DTESTDIR="@0@"'.format(join_paths(guide_sysconfdir, 'xdg', 'autostart')),
+  '-DGNOMELOCALEDIR="@0@"'.format(guide_localedir)
 ]
 
 common_deps += [

@@ -8,20 +8,33 @@ project(
 guide_prefix = get_option('prefix')
 guide_datadir = join_paths(guide_prefix, get_option('datadir'))
 guide_bindir = join_paths(guide_prefix, get_option('bindir'))
-guide_icondir = join_paths(guide_datadir, 'icons')
 guide_sysconfdir = join_paths(guide_prefix, get_option('sysconfdir'))
+guide_localedir = join_paths(guide_prefix, get_option('localedir'))
 #guide_sysconfdir = join_paths('/', get_option('sysconfdir'))
+
+guide_icondir = join_paths(guide_datadir, 'icons')
 guide_desktopdir = join_paths(guide_datadir, 'applications')
 
 cc = meson.get_compiler('cpp')
 
-guide_gettext = meson.project_name() + '-1.0'
+guide_gettext = meson.project_name() + '-1.0.0'
 
 config_h = configuration_data()
-configure_file(
-  output: 'config.h',
-  configuration:config_h
-)
+set_defines = [
+  ['PACKAGE', meson.project_name()],
+  ['PACKAGES_VERSION', meson.project_version()],
+  ['VERSION', meson.project_version()],
+  ['GETTEXT_PACKAGE', guide_gettext]
+]
+
+foreach define: set_defines
+  config_h.set_quoted(define[0], define[1])
+endforeach
+
+#configure_file(
+#  output: 'config.h',
+#  configuration:config_h
+#)
 
 glib_dep = dependency('glib-2.0', version: '>= 2.58.3')
 gnome_desktop_dep = dependency('gnome-desktop-3.0', version: '>= 3.27.90')
@@ -57,12 +70,12 @@ subdir('data')
 subdir('po')
 subdir('src')
 
-#contigure_file(
-#  output: 'config.h',
-#  configuration: config_h
-#)
+configure_file(
+  output: 'config.h',
+  configuration: config_h
+)
 
-#output = ''
-#output += '\n        ' + meson.project_name() + ' - ' + meson.project_version() + '\n'
+output = ''
+output += '\n        ' + meson.project_name() + ' - ' + meson.project_version() + '\n'
 
-#message(output)
+message(output)
