@@ -216,13 +216,10 @@ web_view_load_changed (WebKitWebView *web_view,
             if (g_strcmp0 (sp[length - 1], "redirect.html") == 0)
             {
                 // execute gooroom site
-                gchar *cmd = g_strdup ("gooroom-browser https://www.gooroom.kr");
-                system(cmd);
+                g_spawn_command_line_async ("/usr/bin/gooroom-browser https://www.gooroom.kr", NULL);
                 // load end page
                 webkit_web_view_stop_loading (web_view);
                 load_uri (current_index);
-
-                g_free (cmd);
             }
 
             g_strfreev (sp);
