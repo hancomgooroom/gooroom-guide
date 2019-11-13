@@ -46,7 +46,7 @@ common_deps = [
   dependency('glib-2.0', version: '2.58.3')
 ]
 
-webkit2gtk_dep = dependency('webkit2gtk-4.0', version: '2.24.2')
+webkit2gtk_dep = dependency('webkit2gtk-4.0', version: '>=2.24.2')
 
 gnome = import('gnome')
 i18n = import('i18n')
