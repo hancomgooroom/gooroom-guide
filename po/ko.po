@@ -1,5 +1,5 @@
 # Korea translations for gooroom-guide package. 
-# Copyright (C) 2015-2019 THE gooroom-guide'S COPYRIGHT HOLDER 
+# Copyright (C) 2019 gooroom <gooroom@gooroom.kr> 
 # This file is distributed under the same license as the gooroom-guide package. 
 #
 #, fuzzy
@@ -26,7 +26,7 @@ msgstr "구름플랫폼의 기능을 설명합니다."
 
 #: gooroom-guide.desktop.in.in:4 guide.ui:30
 msgid "Gooroom Guide"
-msgstr "구름 가이드"
+msgstr "구름 도움말"
 
 
 #: guide.ui:150
