@@ -1,3 +1,17 @@
+gooroom-guide (0.3.1+grm2u1) unstable; urgency=medium
+
+  [ HaeRyong Jeong ]
+  * [0bb44163] Updating source regarding copyright
+  * [481767f1] Updating source regarding copyright
+  * [bc9930fa] Fixed webkitwebview version in meson.build
+
+  [ cjheo ]
+  * [fd48f943] Replace the system API with g_spawn_commandline_aync
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sun, 01 Dec 2019 17:36:41 +0900
+
 gooroom-guide (0.2.3+grm1u1) unstable; urgency=medium
 
   [ HaeRyong Jeong ]
