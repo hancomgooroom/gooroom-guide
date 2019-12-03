@@ -1,11 +1,5 @@
-@font-face {
-    font-family: 'Nanum';
-    src: url('fonts/NanumGothic.ttf')
-}
-
 body {
     position:fixed;
     width: 900px;
     height: 496px;
-    font-family: Nanum;
 }
