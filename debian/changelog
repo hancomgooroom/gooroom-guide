@@ -1,55 +1,5 @@
-gooroom-guide (0.3.2+grm2u1) unstable; urgency=medium
-
-  [ HaeRyong Jeong ]
-  * [1ff41be8] Update sources regarding copyright
-
-  [ Gooroom Autobuilder ]
-
- -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sun, 01 Dec 2019 18:49:15 +0900
-
-gooroom-guide (0.3.1+grm2u1) unstable; urgency=medium
-
-  [ HaeRyong Jeong ]
-  * [0bb44163] Updating source regarding copyright
-  * [481767f1] Updating source regarding copyright
-  * [bc9930fa] Fixed webkitwebview version in meson.build
-
-  [ cjheo ]
-  * [fd48f943] Replace the system API with g_spawn_commandline_aync
-
-  [ Gooroom Autobuilder ]
-
- -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sun, 01 Dec 2019 17:36:41 +0900
-
-gooroom-guide (0.2.3+grm1u1) unstable; urgency=medium
-
-  [ HaeRyong Jeong ]
-  * [6edf34ea] add dependency library
-
-  [ Gooroom Autobuilder ]
-
- -- Gooroom Autobuilder <jenkins@gooroom.kr>  Wed, 30 Jan 2019 11:40:14 +0900
-
-gooroom-guide (0.2.2+grm1u1) unstable; urgency=medium
-
-  [ HaeRyong Jeong ]
-  * [137d020c] fixed auto start routine
-
-  [ Gooroom Autobuilder ]
-
- -- Gooroom Autobuilder <jenkins@gooroom.kr>  Wed, 16 Jan 2019 12:06:20 +0900
-
-gooroom-guide (0.2.1+grm1u1) unstable; urgency=medium
-
-  [ HaeRyong Jeong ]
-  * [9ea88df4] change navigation button ui
-
-  [ Gooroom Autobuilder ]
-
- -- Gooroom Autobuilder <jenkins@gooroom.kr>  Tue, 15 Jan 2019 14:09:07 +0900
-
-gooroom-guide (0.1) unstable; urgency=medium
+gooroom-guide (0.3.3+grm2u1) unstable; urgency=medium
 
   * Initial Release.
 
- -- jeong <gooroom@gooroom.kr>  Tue, 02 Oct 2018 17:26:03 +0900
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Tue, 03 Dec 2019 19:40:41 +0900
