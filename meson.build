@@ -1,5 +1,5 @@
 project(
-  'gooroom-guide', 'cpp', 'c',
+  'gooroom-guide', 'c',
   version : '1.0.0',
   license : 'GPL2+',
   meson_version : '>=0.43.0'
@@ -15,7 +15,8 @@ guide_localedir = join_paths(guide_prefix, get_option('localedir'))
 guide_icondir = join_paths(guide_datadir, 'icons')
 guide_desktopdir = join_paths(guide_datadir, 'applications')
 
-cc = meson.get_compiler('cpp')
+#cc = meson.get_compiler('cpp')
+#cc = meson.get_compiler('c')
 
 guide_gettext = meson.project_name() + '-1.0.0'
 
@@ -38,6 +39,7 @@ endforeach
 
 glib_dep = dependency('glib-2.0', version: '>= 2.58.3')
 gnome_desktop_dep = dependency('gnome-desktop-3.0', version: '>= 3.27.90')
+webkit2gtk_dep = dependency('webkit2gtk-4.0', version: '>=2.24.2')
 
 common_deps = [
   glib_dep,
@@ -45,8 +47,6 @@ common_deps = [
   dependency('gtk+-3.0', version: '> 3.22.20'),
   dependency('glib-2.0', version: '2.58.3')
 ]
-
-webkit2gtk_dep = dependency('webkit2gtk-4.0', version: '>=2.24.2')
 
 gnome = import('gnome')
 i18n = import('i18n')

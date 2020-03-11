@@ -23,9 +23,7 @@ cflags = [
 
 common_deps += [
   webkit2gtk_dep,
-  #dependency('json-c', version: '>= 0.12.1'),
-  dependency('jsoncpp', version: '>= 1.7.4'),
-  #dependency('json-glib-1.0', version:'1.4.4')
+  dependency('json-glib-1.0', version:'>=1.4.4'),
 ]
 
 resources_data = files(
@@ -33,7 +31,10 @@ resources_data = files(
 )
 
 sources = files(
-  'guide.cpp'
+  'main.c',
+  'guide-application.c',
+  'guide-window.c',
+  'guide-utils.c'
 )
 
 common_sources = []
@@ -52,6 +53,6 @@ executable(
   sources,
   include_directories : top_inc,
   dependencies : common_deps,
-  cpp_args : cflags,
+  c_args : cflags,
   install : true
 )

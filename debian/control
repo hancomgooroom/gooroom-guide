@@ -2,13 +2,24 @@ Source: gooroom-guide
 Section: admin
 Priority: optional
 Maintainer: Gooroom Maintainers <gooroom@gooroom.kr>
-Build-Depends: debhelper (>= 9), dh-autoreconf, gettext, meson (>= 0.43.0),
- libwebkit2gtk-4.0-dev, libglib2.0-dev, libgtk-3-dev, intltool, libjsoncpp-dev,
- gnome-pkg-tools (>=0.10), libgnome-desktop-3-dev (>= 3.27.90)
+Build-Depends: debhelper (>= 9),
+               dh-autoreconf,
+               gettext,
+               meson (>= 0.43.0),
+               libwebkit2gtk-4.0-dev,
+               libglib2.0-dev,
+               libgtk-3-dev,
+               intltool,
+               libjsoncpp-dev,
+               gnome-pkg-tools (>=0.10),
+               libgnome-desktop-3-dev (>= 3.27.90),
+               libjson-glib-dev,
 Standards-Version: 3.9.8
 Homepage: https://git.gooroom.kr/gooroom-guide
 
 Package: gooroom-guide
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libgl1-mesa-dri
+Depends: ${shlibs:Depends}, ${misc:Depends},
+         libgl1-mesa-dri,
+         libjson-glib-1.0-0 (>=1.4.4),
 Description: The Gooroom Guide to provide convenience to users.
