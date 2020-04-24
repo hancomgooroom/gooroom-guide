@@ -19,8 +19,6 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-//#include <gdk/gdk.h>
-//#include <gio/gio.h>
 #include <json-glib/json-glib.h>
 
 #include <webkit2/webkit2.h>
@@ -179,7 +177,6 @@ guide_window_webview_load_changed (WebKitWebView *web_view,
     //{
     //    const gchar *uri = webkit_web_view_get_uri (web_view);
 
-    //    printf ("= = = = => started load: %s\n", uri);
     //    if (g_strcmp0 (uri, "https://www.gooroom.kr/") == 0)
     //    {
     //        // execute gooroom site
@@ -213,25 +210,56 @@ clear_tocs (gchar **item)
   g_free (item);
 }
 
+static gchar*
+get_language ()
+{
+  const gchar *locale = NULL;
+  const gchar **split = NULL;
+  const g_autofree gchar *lang = NULL;
+
+  locale = setlocale (LC_MESSAGES, NULL);
+
+  split = g_strsplit (locale, ".", -1);
+  lang = g_strdup_printf ("%s", split[0]);
+
+  g_free (locale);
+  g_strfreev (split);
+
+  if (g_strcmp0 (lang, "ko") == 0 ||
+      g_strcmp0 (lang, "ko_KR") == 0) {
+    return "ko";
+  }
+  else if (g_strcmp0 (lang, "en") == 0 ||
+      g_strcmp0 (lang, "en_GB") == 0 ||
+      g_strcmp0 (lang, "en_US") == 0) {
+    return "en";
+  }
+
+  return "ko";
+}
+
 static bool
 init_uri_list(GuideWindowPrivate *priv)
 {
-  g_autofree gchar *toc_path;
+  g_autofree gchar *toc_path = NULL;
+  g_autofree gchar *toc = NULL;
   g_autoptr(GError) error = NULL;
   JsonParser *parser;
   JsonObject *ro;
   JsonObjectIter iter;
   JsonArray *array;
+  gchar *lang = get_language ();
 
   int cnt = 0, length = 0;
 
-  toc_path = g_strdup_printf ("%s/%s", PACKAGE_GUIDEDIR, "toc.json");
-  if (!g_file_test (toc_path, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))
+  toc_path = g_strdup_printf ("%s", PACKAGE_GUIDEDIR);
+  toc = g_strdup_printf ("%s/%s", toc_path, "toc.json");
+  if (!g_file_test (toc, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))
     return FALSE;
 
   parser = json_parser_new ();
 
-  if (!json_parser_load_from_file (parser, toc_path, &error))
+  if (!json_parser_load_from_file (parser, toc, &error))
   {
     g_error ("%s", error->message);
     return FALSE;
@@ -248,9 +276,8 @@ init_uri_list(GuideWindowPrivate *priv)
 
   while (cnt < length)
   {
-    const gchar *toc = json_array_get_string_element (array, cnt);
-    gchar *path = g_strdup_printf ("file://%s%s", PACKAGE_GUIDEDIR, toc);
-    gchar *tt;
+    const gchar *content = json_array_get_string_element (array, cnt);
+    gchar *path = g_strdup_printf ("file://%s/%s/%s", toc_path, lang, content);
 
     g_array_append_val (priv->toc_array, path);
 
@@ -274,10 +301,7 @@ guide_window_activate (GuideWindow *self)
   // norun check
   norun = get_norun_file_path ();
   if (!g_file_test (norun, G_FILE_TEST_EXISTS))
-  {
       show_at_begin = TRUE;
-      g_printf ("= = = => show begin true\n");
-  }
 
   init_uri_list(priv);
   load_uri (0, priv);
