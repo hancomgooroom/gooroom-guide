@@ -1,3 +1,13 @@
+gooroom-guide (0.3.4+grm2u1) unstable; urgency=medium
+
+  [ JeongHaeRyong ]
+  * [dd0867ac] Update guide execute routine and [Bug:1699] Fixed it window is delay when execute.
+  * [1f23535b] Added english language file
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Fri, 29 May 2020 17:46:56 +0900
+
 gooroom-guide (0.3.3+grm2u1) unstable; urgency=medium
 
   * Initial Release.
