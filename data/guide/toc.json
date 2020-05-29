@@ -1,14 +1,14 @@
 {
     "paths":[
         "/intro.html",
-        "/feature.html",
-        "/component.html",
+        "/information.html",
         "/desktop.html",
-        "/dockbar.html",
-        "/launcher.html",
-        "/software-center.html",
+        "/systemtray.html",
+        "/window.html",
+        "/notification.html",
         "/browser.html",
-        "/secure-framework.html",
-        "/end.html"
+        "/basicapps.html",
+        "/security.html",
+        "/finish.html"
     ]
 }
