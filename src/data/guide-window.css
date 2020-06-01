@@ -1,0 +1,18 @@
+button.begin-button,
+button.close-button {
+  background-color: #4a73d6;
+  color: white;
+}
+
+button.navi-button {
+  background-color: #f3f3f3;
+  border-color: #f3f3f3;
+}
+
+button.navi-button:active {
+  color: black;
+}
+
+.bar-stack {
+  background-color: #f3f3f3;
+}

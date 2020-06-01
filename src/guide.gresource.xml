@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-    <gresource prefix="/org/gooroom/guide">
-        <file preprocess="xml-stripblanks">guide.ui</file>
-    </gresource>
+  <gresource prefix="/org/gooroom/guide">
+    <file alias="guide.ui" preprocess="xml-stripblanks">data/guide-window.ui</file>
+    <file alias="styles.css">data/guide-window.css</file>
+  </gresource>
 </gresources>

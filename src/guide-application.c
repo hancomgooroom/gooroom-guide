@@ -18,11 +18,9 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <gio/gio.h>
-//#include <glib/gstdio.h>
-//#include <gdk/gdk.h>
 
 #include "guide-application.h"
 #include "guide-window.h"
@@ -36,17 +34,6 @@ struct _GuideApplication {
 G_DEFINE_TYPE(GuideApplication, guide_application, GTK_TYPE_APPLICATION)
 
 static void
-guide_application_activate (GApplication *app)
-{
-  GuideApplication *self = GUIDE_APPLICATION (app);
-
-  //self->window = guide_window_new (GTK_APPLICATION (app));
-  guide_window_activate (self->window);
-
-  //gtk_window_present (GTK_WINDOW (self->window));
-}
-
-static void
 guide_application_startup (GApplication *app)
 {
   GuideApplication *self = GUIDE_APPLICATION (app);
@@ -57,9 +44,30 @@ guide_application_startup (GApplication *app)
 }
 
 static void
+guide_application_activate (GApplication *app)
+{
+  GuideApplication *self = GUIDE_APPLICATION (app);
+
+  guide_window_activate (self->window);
+
+  //gtk_window_present (GTK_WINDOW (self->window));
+}
+
+static void
 guide_application_finalize (GObject *obj)
 {
   G_OBJECT_CLASS (guide_application_parent_class)->finalize (obj);
+}
+
+static int
+guide_application_command_line (GApplication            *app,
+                                GApplicationCommandLine *command_line)
+{
+  GuideApplication *self = GUIDE_APPLICATION (app);
+  int retval = 0;
+
+  guide_window_activate (self->window);
+  return retval;
 }
 
 static void
@@ -71,6 +79,8 @@ guide_application_class_init (GuideApplicationClass *class)
   object_class->finalize = guide_application_finalize;
   application_class->activate = guide_application_activate;
   application_class->startup = guide_application_startup;
+  application_class->command_line = guide_application_command_line;
+
 }
 
 static void
@@ -83,5 +93,5 @@ guide_application_new (void)
 {
   return g_object_new (GUIDE_TYPE_APPLICATION,
                        "application-id", "org.gooroom.guide",
-                       "flags", G_APPLICATION_FLAGS_NONE, NULL);
+                       "flags", G_APPLICATION_HANDLES_COMMAND_LINE, NULL);
 }

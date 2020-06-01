@@ -21,13 +21,20 @@ msgid "< Prev"
 msgstr "< 이전으로"
 
 #: gooroom-guide.desktop.in.in:5
-msgid "Describes the features of the Gooroom platform"
-msgstr "구름플랫폼의 기능을 설명합니다."
+msgid "Describes the features of the Hancom Gooroom platform"
+msgstr "한컴구름 플랫폼의 기능을 설명합니다."
 
 #: gooroom-guide.desktop.in.in:4 guide.ui:30
-msgid "Gooroom Guide"
-msgstr "구름 도움말"
+msgid "Hancom Gooroom Guide"
+msgstr "한컴구름 가이드"
 
+#: guide.ui:34
+msgid "Hancom Gooroom Quick Guide"
+msgstr "한컴구름 빠른 시작 가이드"
+
+#: guide.ui:209
+msgid "Close"
+msgstr "마치기"
 
 #: guide.ui:150
 msgid "Next >"
@@ -39,4 +46,4 @@ msgstr "시작하기"
 
 #: guide.ui:83
 msgid "Run at startup"
-msgstr "시작할 때 실행하기"
+msgstr "시작할 때 표시"

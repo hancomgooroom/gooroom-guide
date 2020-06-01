@@ -1,20 +1,3 @@
-desktop = 'gooroom-guide.desktop'
-desktop_in = configure_file(
-  input : desktop + '.in.in',
-  output : desktop + '.in',
-  configuration : desktop_conf
-)
-
-i18n.merge_file(
-  desktop,
-  type : 'desktop',
-  input : desktop_in,
-  output : desktop,
-  po_dir : po_dir,
-  install : true,
-  install_dir : guide_desktopdir
-)
-
 cflags = [
   '-DPACKAGE_GUIDEDIR="@0@"'.format(join_paths(guide_datadir, 'gooroom-guide', 'guide')),
   '-DTESTDIR="@0@"'.format(join_paths(guide_sysconfdir, 'xdg', 'autostart')),
@@ -27,7 +10,8 @@ common_deps += [
 ]
 
 resources_data = files(
-  'guide.ui'
+  'data/guide-window.ui',
+  'data/guide-window.css'
 )
 
 sources = files(
