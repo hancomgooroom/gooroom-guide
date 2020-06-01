@@ -31,6 +31,9 @@
 
 #include <stdio.h>
 
+#define MINIMUM_WIDTH 600
+#define MINIMUM_HEIGHT 330
+
 struct _GuideWindow
 {
   GtkApplicationWindow     parent;
@@ -161,12 +164,12 @@ guide_window_webview_load_changed (WebKitWebView *web_view,
 
       if (g_strcmp0 (sp[length - 1], "redirect.html") == 0)
       {
-        // execute gooroom site
-        g_spawn_command_line_async ("/usr/bin/gooroom-browser https://www.gooroom.kr", NULL);
-
         // load end page
         webkit_web_view_stop_loading (web_view);
         load_uri (priv->current, priv);
+
+        // execute gooroom site
+        g_spawn_command_line_async ("/usr/bin/gooroom-browser --new-window https://www.gooroom.kr", NULL);
       }
 
       g_strfreev (sp);
@@ -328,7 +331,21 @@ guide_window_finalize (GObject *obj)
 static void
 guide_window_constructed (GObject *obj)
 {
+  GuideWindow        *self = GUIDE_WINDOW (obj);
+  GuideWindowPrivate *priv = guide_window_get_instance_private (self);
+  gint scr_width  = 0;
+  gint scr_height = 0;
+  GtkRequisition minimum;
+
+
   G_OBJECT_CLASS (guide_window_parent_class)->constructed (obj);
+
+  scr_width = gdk_screen_width ();
+  scr_height = gdk_screen_height ();
+  gtk_widget_get_preferred_size(GTK_WIDGET (priv->webview_frame), &minimum, NULL);
+
+  if (scr_width <= minimum.width || scr_height <= minimum.height)
+    gtk_widget_set_size_request (GTK_WIDGET (priv->webview_frame), MINIMUM_WIDTH, MINIMUM_HEIGHT);
 }
 
 static void
@@ -368,8 +385,6 @@ static void
 guide_window_init (GuideWindow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
-
-  return;
 }
 
 GuideWindow *

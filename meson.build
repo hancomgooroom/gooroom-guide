@@ -16,7 +16,7 @@ guide_icondir = join_paths(guide_datadir, 'icons')
 guide_desktopdir = join_paths(guide_datadir, 'applications')
 
 #cc = meson.get_compiler('cpp')
-#cc = meson.get_compiler('c')
+cc = meson.get_compiler('c')
 
 guide_gettext = meson.project_name() + '-1.0.0'
 
