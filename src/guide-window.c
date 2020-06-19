@@ -201,27 +201,34 @@ get_language ()
 {
   const gchar *locale = NULL;
   const gchar **split = NULL;
+  const gchar *result = NULL;
   const g_autofree gchar *lang = NULL;
 
   locale = setlocale (LC_MESSAGES, NULL);
+  if (locale == NULL)
+  {
+    result = g_strdup_printf ("ko");
+    goto END;
+  }
 
   split = g_strsplit (locale, ".", -1);
   lang = g_strdup_printf ("%s", split[0]);
 
-  g_free (locale);
-  g_strfreev (split);
-
   if (g_strcmp0 (lang, "ko") == 0 ||
       g_strcmp0 (lang, "ko_KR") == 0) {
-    return "ko";
+    result = g_strdup_printf ("ko");
   }
   else if (g_strcmp0 (lang, "en") == 0 ||
       g_strcmp0 (lang, "en_GB") == 0 ||
       g_strcmp0 (lang, "en_US") == 0) {
-    return "en";
+    result = g_strdup_printf ("en");
   }
 
-  return "ko";
+END:
+  g_strfreev (split);
+  setlocale (LC_MESSAGES, locale);
+
+  return result;
 }
 
 static bool
@@ -234,7 +241,7 @@ init_uri_list(GuideWindow *self)
   JsonObject *ro;
   JsonObjectIter iter;
   JsonArray *array;
-  gchar *lang = get_language ();
+  g_autofree gchar *lang = get_language ();
 
   int cnt = 0, length = 0;
 
