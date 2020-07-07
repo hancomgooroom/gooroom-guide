@@ -1,3 +1,13 @@
+gooroom-guide (0.3.5+grm2u1+han2u1) unstable; urgency=medium
+
+  [ Jeong HaeRyong ]
+  * [dff4634a] Hancom gooroom-guide init
+  * [ed14273b] 1. Fixed autostart error 2. Change Contents and UI
+  * [0a0facbc] Change BI image and content image
+  * [31e2c1b3] [Bug:2372] Fixed context menu on titlebar
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Tue, 07 Jul 2020 13:00:31 +0900
+
 gooroom-guide (0.3.4+grm2u1) unstable; urgency=medium
 
   [ JeongHaeRyong ]
