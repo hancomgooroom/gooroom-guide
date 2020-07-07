@@ -1,3 +1,13 @@
+gooroom-guide (0.3.5+grm2u1) unstable; urgency=medium
+
+  [ Jeong HaeRyong ]
+  * [f5aa5247] Fixed context menu on titlebar
+  * [adb55f45] Fixed autostart error
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Tue, 07 Jul 2020 12:57:15 +0900
+
 gooroom-guide (0.3.4+grm2u1) unstable; urgency=medium
 
   [ JeongHaeRyong ]
