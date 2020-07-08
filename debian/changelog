@@ -1,3 +1,10 @@
+gooroom-guide (0.3.6+grm2u1+han2u1) unstable; urgency=medium
+
+  [ Haeryong Jeong ]
+  * [bbf4fd5d] Removed english contents and disabled locale language func
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Wed, 08 Jul 2020 20:21:05 +0900
+
 gooroom-guide (0.3.5+grm2u1+han2u1) unstable; urgency=medium
 
   [ Jeong HaeRyong ]
