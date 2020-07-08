@@ -1,3 +1,12 @@
+gooroom-guide (0.3.6+grm2u1) unstable; urgency=medium
+
+  [ Haeryong Jeong ]
+  * [2b8268d4] Fixed contents and code refactoring
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Wed, 08 Jul 2020 20:16:19 +0900
+
 gooroom-guide (0.3.5+grm2u1) unstable; urgency=medium
 
   [ Jeong HaeRyong ]
