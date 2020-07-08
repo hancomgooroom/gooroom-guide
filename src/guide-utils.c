@@ -1,13 +1,13 @@
 #include "config.h"
 
 #include <glib.h>
+#include <glib/gstdio.h>
 #include "guide-utils.h"
-//#include <gstdio.h>
 
 gchar *
 get_norun_file_path ()
 {
-  g_autofree gchar *gooroom_dir;
+  g_autofree const gchar *gooroom_dir;
   g_autofree gchar *guide_dir;
 
   gooroom_dir = g_strdup_printf ("%s/.config/gooroom", g_get_home_dir());//(dir, "./config", "/gooroom");
