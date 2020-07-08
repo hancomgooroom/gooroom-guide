@@ -213,10 +213,10 @@ clear_tocs (gchar **item)
   g_free (item);
 }
 
-static gchar*
+gchar*
 get_language ()
 {
-  const gchar *locale = NULL;
+  gchar *locale = NULL;
   const gchar **split = NULL;
   const gchar *result = NULL;
   const g_autofree gchar *lang = NULL;
@@ -242,8 +242,9 @@ get_language ()
   }
 
 END:
-  g_strfreev (split);
   setlocale (LC_MESSAGES, locale);
+
+  g_strfreev (split);
 
   return result;
 }
@@ -338,21 +339,22 @@ guide_window_finalize (GObject *obj)
 static void
 guide_window_constructed (GObject *obj)
 {
-  GuideWindow        *self = GUIDE_WINDOW (obj);
-  GuideWindowPrivate *priv = guide_window_get_instance_private (self);
-  gint scr_width  = 0;
-  gint scr_height = 0;
-  GtkRequisition minimum;
-
+  GuideWindow *self = GUIDE_WINDOW (obj);
+  GtkRequisition req;
+  GdkDisplay *display;
+  GdkMonitor *monitor;
+  GdkRectangle geo;
 
   G_OBJECT_CLASS (guide_window_parent_class)->constructed (obj);
 
-  scr_width = gdk_screen_width ();
-  scr_height = gdk_screen_height ();
-  gtk_widget_get_preferred_size(GTK_WIDGET (priv->webview_frame), &minimum, NULL);
+  display = gdk_display_get_default ();
+  monitor = gdk_display_get_monitor (display, 0);
 
-  if (scr_width <= minimum.width || scr_height <= minimum.height)
-    gtk_widget_set_size_request (GTK_WIDGET (priv->webview_frame), MINIMUM_WIDTH, MINIMUM_HEIGHT);
+  gdk_monitor_get_geometry (monitor, &geo);
+  gtk_widget_get_preferred_size (GTK_WIDGET (self), &req, NULL);
+
+  if (geo.width <= req.width || geo.height <= req.height)
+    gtk_widget_set_size_request (GTK_WIDGET (self), MINIMUM_WIDTH, MINIMUM_HEIGHT);
 }
 
 static void
