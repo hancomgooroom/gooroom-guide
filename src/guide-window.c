@@ -31,6 +31,9 @@
 
 #include <stdio.h>
 
+#define MINIMUM_WIDTH 600
+#define MINIMUM_HEIGHT 330
+
 struct _GuideWindow
 {
   GtkApplicationWindow     parent;
@@ -87,9 +90,10 @@ guide_window_check_show_at_begin (GtkButton* button, GuideWindow *window)
 }
 
 static gboolean
-guide_window_present (GuideWindow *self)
+guide_window_present (gpointer user_data)
 {
-  gtk_window_present (GTK_WINDOW (self));
+  GuideWindow *window = GUIDE_WINDOW (user_data);
+  gtk_window_present (GTK_WINDOW (window));
   return 0;
 }
 
@@ -196,10 +200,10 @@ clear_tocs (gchar **item)
   g_free (item);
 }
 
-static gchar*
+gchar*
 get_language ()
 {
-  const gchar *locale = NULL;
+  gchar *locale = NULL;
   const gchar **split = NULL;
   const gchar *result = NULL;
   const g_autofree gchar *lang = NULL;
@@ -225,8 +229,9 @@ get_language ()
   }
 
 END:
-  g_strfreev (split);
   setlocale (LC_MESSAGES, locale);
+
+  g_strfreev (split);
 
   return result;
 }
@@ -241,7 +246,8 @@ init_uri_list(GuideWindow *self)
   JsonObject *ro;
   JsonObjectIter iter;
   JsonArray *array;
-  g_autofree gchar *lang = get_language ();
+  // 한컴구름 도움말은 한글 콘텐츠만 지원함...
+  //g_autofree gchar *lang = get_language ();
 
   int cnt = 0, length = 0;
 
@@ -270,7 +276,7 @@ init_uri_list(GuideWindow *self)
   while (cnt < length)
   {
     const gchar *content = json_array_get_string_element (array, cnt);
-    gchar *path = g_strdup_printf ("file://%s/%s/%s", toc_path, lang, content);
+    gchar *path = g_strdup_printf ("file://%s/%s/%s", toc_path, "ko", content);
 
     g_array_append_val (self->toc_array, path);
 
@@ -285,7 +291,7 @@ init_uri_list(GuideWindow *self)
 static void
 init_cursor (GuideWindow *self)
 {
-  GdkScreen *screen = gtk_widget_get_screen (self);
+  GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (self));
   GdkDisplay *display = gdk_screen_get_display (screen);
   self->default_cursor = gdk_cursor_new_from_name (display, "default");
   self->pointer_cursor = gdk_cursor_new_from_name (display, "pointer");
@@ -327,7 +333,7 @@ guide_window_leave_button (GtkButton *button, GdkEvent *event, GuideWindow *self
 static void
 guide_window_click_close (GtkButton* button, GuideWindow *self)
 {
-  gtk_window_close (self);
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 void
@@ -374,8 +380,21 @@ static void
 guide_window_constructed (GObject *obj)
 {
   GuideWindow *self = GUIDE_WINDOW (obj);
+  GtkRequisition req;
+  GdkDisplay *display;
+  GdkMonitor *monitor;
+  GdkRectangle geo;
 
   G_OBJECT_CLASS (guide_window_parent_class)->constructed (obj);
+
+  display = gdk_display_get_default ();
+  monitor = gdk_display_get_monitor (display, 0);
+
+  gdk_monitor_get_geometry (monitor, &geo);
+  gtk_widget_get_preferred_size (GTK_WIDGET (self), &req, NULL);
+
+  if (geo.width <= req.width || geo.height <= req.height)
+    gtk_widget_set_size_request (GTK_WIDGET (self), MINIMUM_WIDTH, MINIMUM_HEIGHT);
 }
 
 static void
@@ -384,7 +403,7 @@ guide_window_class_init (GuideWindowClass *class)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
   GObjectClass *object_class = G_OBJECT_CLASS (class);
 
-  // 처음 Webview가 만들어지지 않아서 WebKitWebView type 선언 필요함
+  // 최초에 Webview가 생성되지 않아서 WebKitWebView type 선언 필요함
   g_object_unref (g_object_ref_sink (webkit_web_view_new ()));
 
   object_class->dispose = guide_window_dispose;

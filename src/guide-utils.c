@@ -1,6 +1,7 @@
 #include "config.h"
 
 #include <glib.h>
+#include <glib/gstdio.h>
 #include "guide-utils.h"
 //#include <gstdio.h>
 

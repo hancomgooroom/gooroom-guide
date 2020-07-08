@@ -28,5 +28,6 @@ G_DECLARE_FINAL_TYPE (GuideWindow, guide_window, GUIDE, WINDOW, GtkApplicationWi
 GuideWindow *guide_window_new (GtkApplication *application);
 
 void         guide_window_open (GuideWindow *self);
+void         guide_window_activate (GuideWindow *self);
 
 G_END_DECLS
