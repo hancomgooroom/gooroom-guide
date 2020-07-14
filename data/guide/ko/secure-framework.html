@@ -1,101 +1,25 @@
 <!DOCTYPE html>
 <html onmousedown="return false">
-    <link rel="stylesheet" href="common.css">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" href="common.css">
+        <link rel="stylesheet" href="./common.css">
         <style>
-            body {
-                background-size: 900px auto;
-            }
-            div.subject {
-                text-align: center;
-                font-size: 40px;
-                font-weight: bold;
-                padding-top: 40px;
-            }
-            div.content {
-                text-align: center;
-                font-size: 18px;
-                color: #606060;
-                font-weight: bold;
-                padding-top: 15px;
-            }
-            div.icon-subject {
-                position: fixed;
-                text-align: center;
-                font-size: 17px;
-                font-weight: bold;
-                margin-top: 215px;
-            }
-            div.booting {
-                padding-left: 25px;
-                color: #237db9;
-            }
-            div.protect {
-                padding-left: 264px;
-                color: #15aa96;
-            }
-            div.control {
-                padding-left: 495px;
-                color: #b2382c;
-            }
-            div.os {
-                padding-left: 717px;
-                color: #f19b14;
-            }
-            p.explain {
-                font-size: 12px;
-                text-align: center;
-                color: #606060
-            }
+        .content {
+            overflow:auto;
+            position:absolute;
+            top: 33%;
+            left: 10%;
+        }
+        .subject {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .description {
+            font-size: 15px;
+            padding-top: 17px;
+        }
         </style>
     </head>
-    <body background="../../images/framework.png">
-        <div class="subject">구름 플랫폼 보안 프레임워크</div>
-        <div class="content">구름 보안 프레임워크는 높은 보안성을 위해, 구름플랫폼만의 특별한 보안강화 기능을 지칭합니다.</div>
-      <div class="icon-subject booting">
-        <div>신뢰부팅</div>
-        <div>
-          <p class="explain">
-          구름OS로 부팅 시, 보안침입<br/>
-          (해킹)에 의한 시스템 변조를<br/>
-          검증하여, 사전에 부팅을 차단.
-          </p>
-        </div>
-      </div>
-      <div class="icon-subject protect">
-        <div>실행파일 보호</div>
-        <div>
-          <p class="explain">
-          주요 모듈 및 실행파일을<br/>
-          자체검증키를 통해,<br/>
-          유효여부를 검사하여, 위.<br/>
-          변조를 차단.
-          </p>
-        </div>
-      </div>
-      <div class="icon-subject control">
-        <div>매체 접근 제어</div>
-        <div>
-          <p class="explain">
-            구름OS에 로그인 된<br/>
-            사용자의 외장 저장매체,<br/>
-            프린터, 네트워크 등 의<br/>
-            접근권한을 제어.
-          </p>
-        </div>
-      </div>
-      <div class="icon-subject os">
-        <div>운영체제 보호</div>
-        <div>
-          <p class="explain">
-          OS 자체 보호기술을 통해,<br/>
-          시스템 악성코드로부터<br/>
-          내부자료의 훼손여부를<br/>
-          감시하고 차단.
-          </p>
-        </div>
-      </div>
+    <body background="./secure-framework.png">
     </body>
 </html>

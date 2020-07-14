@@ -2,43 +2,24 @@
 <html onmousedown="return false">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" href="common.css">
+        <link rel="stylesheet" href="./common.css">
         <style>
-            body {
-                background-repeat: no-repeat;
-                background-position-y: 185px;
-            }
-            div.panel {
-                margin-top: 15px;
-                margin-left: 20px;
-            }
-            div.tray {
-                position: fixed;
-                margin-top: 170px;
-                margin-left: 380px;
-                text-align: right;
-            }
-            p {
-                font-size: 14px;
-            }
-            p.subject {
-                font-size: 23px;
-                font-weight: bold;
-            }
+        .content {
+            overflow:auto;
+            position:absolute;
+            top: 33%;
+            left: 10%;
+        }
+        .subject {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .description {
+            font-size: 15px;
+            padding-top: 17px;
+        }
         </style>
     </head>
-    <body background="../../images/dockbar.png">
-        <div class="panel">
-            <p class="subject">Dockbar - Panel Area</p>
-            <p>Panel area, located on the left side of the Dockbar, shows the launcher menu<br/>
-            which contains apps provided by Gooroom OS and status of running tasks.<br/><br/>
-            You can easily access frequently used apps or jobs by adding them to the panel.</p>
-        </div>
-        <div class="tray">
-            <p class="subject">Dockbar - Tray Area</p>
-            <p>Tray area, located on the right side of the Dockbar, shows system preferences of Gooroom Platform.<br/>
-            &nbsp;It contains update manager, keyboard settings, network settings, sound,<br/>
-            security status, date and time, system menu settings.
-        </div>
+    <body background="./dockbar.png">
     </body>
 </html>

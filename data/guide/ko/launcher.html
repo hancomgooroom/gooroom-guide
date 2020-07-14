@@ -2,44 +2,24 @@
 <html onmousedown="return false">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" href="common.css">
+        <link rel="stylesheet" href="./common.css">
         <style>
-            body {
-                background-size: 900px 496px;
-                margin:0px;
-            }
-            div.side-img {
-                position: fixed;
-                width: 400px;
-                height: auto;
-                margin-left: 15px;
-            }
-            img.side-img {
-            }
-            div.explain {
-                position: fixed;
-                padding-left: 500px;
-                padding-top: 90px
-            }
-            p.subject {
-                font-size: 20px;
-                font-weight: bold;
-            }
-            p.content {
-                font-size: 16px;
-            }
+        .content {
+            overflow:auto;
+            position:absolute;
+            top: 33%;
+            left: 10%;
+        }
+        .subject {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .description {
+            font-size: 15px;
+            padding-top: 17px;
+        }
         </style>
     </head>
-    <body background="../../images/component-bg.png">
-        <div class="side-img">
-            <img class="side-img" src="../../images/launcher.png">
-        </div>
-        <div class="explain">
-            <p class="subject">구름 런처</p>
-            <p class="content">구름 OS에는 웹 서핑, 영상감상, 문서작업을 위한<br/>
-            기본적인 앱들이 설치되어 있습니다.<br/><br/>
-            구름 런처는 이런 다양한 앱들을 쉽고 편리하게 사용하기<br/>
-            위한 검색과 빠른 실행을 제공합니다.</p>
-        </div>
+    <body background="./launcher.png">
     </body>
 </html>
