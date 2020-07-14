@@ -3,7 +3,6 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 #include "guide-utils.h"
-//#include <gstdio.h>
 
 gchar *
 get_norun_file_path ()

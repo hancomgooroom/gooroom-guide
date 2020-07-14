@@ -4,14 +4,10 @@
   <requires lib="gtk+" version="3.20"/>
   <requires lib="webkit2gtk" version="2.12"/>
   <template class="GuideWindow" parent="GtkApplicationWindow">
-    <property name="width_request">900</property>
-    <property name="height_request">496</property>
     <property name="can_focus">False</property>
     <property name="no_show_all">True</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
-    <property name="default_width">980</property>
-    <property name="default_height">640</property>
     <property name="show_menubar">False</property>
     <child type="titlebar">
       <object class="GtkBox" id="header_box">
@@ -54,8 +50,8 @@
             <property name="height_request">496</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="halign">start</property>
-            <property name="valign">start</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
             <property name="label_xalign">0</property>
             <property name="shadow_type">none</property>
             <child>
@@ -71,8 +67,8 @@
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -98,9 +94,9 @@
                     <property name="receives_default">False</property>
                     <property name="margin_left">2</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="guide_window_check_show_at_begin" object="GuideWindow" swapped="no"/>
                     <signal name="enter-notify-event" handler="guide_window_enter_button" object="GuideWindow" swapped="no"/>
                     <signal name="leave-notify-event" handler="guide_window_leave_button" object="GuideWindow" swapped="no"/>
+                    <signal name="toggled" handler="guide_window_check_show_at_begin" object="GuideWindow" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>

@@ -204,8 +204,8 @@ gchar*
 get_language ()
 {
   gchar *locale = NULL;
+  gchar *result = NULL;
   const gchar **split = NULL;
-  const gchar *result = NULL;
   const g_autofree gchar *lang = NULL;
 
   locale = setlocale (LC_MESSAGES, NULL);
@@ -394,7 +394,7 @@ guide_window_constructed (GObject *obj)
   gtk_widget_get_preferred_size (GTK_WIDGET (self), &req, NULL);
 
   if (geo.width <= req.width || geo.height <= req.height)
-    gtk_widget_set_size_request (GTK_WIDGET (self), MINIMUM_WIDTH, MINIMUM_HEIGHT);
+    gtk_widget_set_size_request (GTK_WIDGET (self->webview_frame), MINIMUM_WIDTH, MINIMUM_HEIGHT);
 }
 
 static void
