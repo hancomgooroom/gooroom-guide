@@ -1,3 +1,10 @@
+gooroom-guide (0.3.7+grm2u1+han2u1) unstable; urgency=medium
+
+  [ Haeryong Jeong ]
+  * [721969cf] Fixed window frame when 800x600 size
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Tue, 14 Jul 2020 15:38:57 +0900
+
 gooroom-guide (0.3.6+grm2u1+han2u1) unstable; urgency=medium
 
   [ Haeryong Jeong ]
