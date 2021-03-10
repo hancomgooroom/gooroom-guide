@@ -47,6 +47,7 @@ struct _GuideWindow
   GtkWidget               *begin_button;
   GtkWidget               *close_button;
 
+  GtkWidget               *event_box;
   GtkWidget               *webview_frame;
   WebKitWebView           *webview;
   GtkWidget               *page_label;
@@ -120,6 +121,13 @@ load_uri (int index, GuideWindow *self)
 }
 
 static void
+guide_window_event_box_button_press_cb(GuideWindow *self, GtkEventBox *box)
+{
+  if (self->current == self->total+1)
+    g_spawn_command_line_async ("/usr/bin/xdg-open https://www.gooroom.kr", NULL);
+}
+
+static void
 guide_window_clicked_prev (GtkButton* button, GuideWindow *self)
 {
   int index = self->current;
@@ -161,23 +169,6 @@ guide_window_webview_load_changed (WebKitWebView *web_view,
 {
   switch (load_event)
   {
-    case WEBKIT_LOAD_COMMITTED:
-    {
-      const gchar *uri = webkit_web_view_get_uri (web_view);
-      gchar **sp = g_strsplit (uri, "/", 15);
-      guint length = g_strv_length (sp);
-
-      if (g_strcmp0 (sp[length - 1], "redirect.html") == 0)
-      {
-        webkit_web_view_stop_loading (web_view);
-        load_uri (self->current, self);
-
-        g_spawn_command_line_async ("/usr/bin/gooroom-browser --new-window https://www.gooroom.kr", NULL);
-      }
-
-      g_strfreev (sp);
-    }
-    break;
     case WEBKIT_LOAD_FINISHED:
     {
       if (self->is_begin)
@@ -190,6 +181,7 @@ guide_window_webview_load_changed (WebKitWebView *web_view,
     break;
     case WEBKIT_LOAD_REDIRECTED:
     case WEBKIT_LOAD_STARTED:
+    case WEBKIT_LOAD_COMMITTED:
     break;
   }
 }
@@ -419,6 +411,7 @@ guide_window_class_init (GuideWindowClass *class)
   gtk_widget_class_bind_template_child (widget_class, GuideWindow, end_bar);
   gtk_widget_class_bind_template_child (widget_class, GuideWindow, auto_start_check);
   gtk_widget_class_bind_template_child (widget_class, GuideWindow, page_label);
+  gtk_widget_class_bind_template_child (widget_class, GuideWindow, event_box);
   gtk_widget_class_bind_template_child (widget_class, GuideWindow, webview_frame);
   gtk_widget_class_bind_template_child (widget_class, GuideWindow, webview);
   gtk_widget_class_bind_template_child (widget_class, GuideWindow, begin_button);
@@ -447,6 +440,10 @@ guide_window_init (GuideWindow *self)
   gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
                                   provider,
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+
+  g_signal_connect_swapped (self->event_box, "button-press-event",
+							(GCallback)guide_window_event_box_button_press_cb, self);
   g_object_unref (provider);
 
   return;
