@@ -29,7 +29,7 @@
 #include "guide-window.h"
 #include "guide-utils.h"
 
-#include <stdio.h>
+#include <locale.h>
 
 #define MINIMUM_WIDTH 600
 #define MINIMUM_HEIGHT 330
@@ -246,8 +246,7 @@ init_uri_list(GuideWindow *self)
   JsonObject *ro;
   JsonObjectIter iter;
   JsonArray *array;
-  // 한컴구름 도움말은 한글 콘텐츠만 지원함...
-  //g_autofree gchar *lang = get_language ();
+  g_autofree gchar *lang = get_language ();
 
   int cnt = 0, length = 0;
 
@@ -276,7 +275,7 @@ init_uri_list(GuideWindow *self)
   while (cnt < length)
   {
     const gchar *content = json_array_get_string_element (array, cnt);
-    gchar *path = g_strdup_printf ("file://%s/%s/%s", toc_path, "ko", content);
+    gchar *path = g_strdup_printf ("file://%s/%s/%s", toc_path, lang, content);
 
     g_array_append_val (self->toc_array, path);
 
