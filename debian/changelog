@@ -1,3 +1,18 @@
+gooroom-guide (0.4.0+grm2u1+han2u1) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [db5242a0] English guide initialization
+  * [b5fbb471] [Bug:3100]Removed the flash that appears when clicked
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Thu, 18 Mar 2021 11:03:03 +0900
+
+gooroom-guide (0.3.8+grm2u1+han2u1) unstable; urgency=medium
+  
+  [ HaeRyong Jeong ]
+  * [8c818283] Updated copyright
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Fri, 31 Jul 2020 11:07:05 +0900
+
 gooroom-guide (0.3.7+grm2u1+han2u1) unstable; urgency=medium
 
   [ Haeryong Jeong ]
