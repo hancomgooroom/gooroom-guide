@@ -375,17 +375,23 @@ guide_window_constructed (GObject *obj)
   GdkDisplay *display;
   GdkMonitor *monitor;
   GdkRectangle geo;
+  GdkPoint point;
 
   G_OBJECT_CLASS (guide_window_parent_class)->constructed (obj);
 
   display = gdk_display_get_default ();
-  monitor = gdk_display_get_monitor (display, 0);
+  monitor = gdk_display_get_primary_monitor (display);
 
   gdk_monitor_get_geometry (monitor, &geo);
   gtk_widget_get_preferred_size (GTK_WIDGET (self), &req, NULL);
 
+  point.x = geo.x + geo.width/2 - req.width/2;
+  point.y = geo.y + geo.height/2 - req.height/2;
+
   if (geo.width <= req.width || geo.height <= req.height)
     gtk_widget_set_size_request (GTK_WIDGET (self->webview_frame), MINIMUM_WIDTH, MINIMUM_HEIGHT);
+
+  gtk_window_move (self,point.x ,point.y );
 }
 
 static void
@@ -462,4 +468,5 @@ guide_window_new (GtkApplication *app)
                        "window-position", GTK_WIN_POS_CENTER,
                        "show-menubar", FALSE,
                        NULL);
+
 }
