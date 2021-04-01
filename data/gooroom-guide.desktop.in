@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=0.1
-Name=Hancom Gooroom Guide
-Comment=Describes the features of the Hancom Gooroom platform
+Name=Gooroom Guide
+Comment=Describes the features of the Gooroom platform
 Encoding=UTF-8
 Exec=/usr/bin/gooroom-guide %f
 Icon=gooroom-guide
