@@ -1,3 +1,11 @@
+gooroom-guide (0.4.1+grm2u1+han2u1) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [0641a1ee] Set gooroom-guide to open frome the center of the primary monitor
+  * [bfc5c068] Changed the webview to GtkImage
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Thu, 01 Apr 2021 12:53:39 +0900
+
 gooroom-guide (0.4.0+grm2u1+han2u1) unstable; urgency=medium
 
   [ boyeon.choi ]
