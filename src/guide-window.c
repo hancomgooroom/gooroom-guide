@@ -130,7 +130,7 @@ static void
 guide_window_event_box_button_press_cb(GuideWindow *self, GtkEventBox *box)
 {
   if (self->index == self->total+1)
-    g_spawn_command_line_async ("/usr/bin/xdg-open https://www.gooroom.kr", NULL);
+    g_spawn_command_line_async ("/usr/bin/xdg-open https://www.hancom.com/product/productGooroomMain.do", NULL);
 }
 
 static void
