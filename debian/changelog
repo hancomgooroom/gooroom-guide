@@ -1,3 +1,10 @@
+gooroom-guide (0.4.1+grm2u1+han2u3) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [214279ef] Connected to Hancom Gooroom official website, not Gooroom
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sat, 03 Apr 2021 15:57:49 +0900
+
 gooroom-guide (0.4.1+grm2u1+han2u2) unstable; urgency=medium
 
   [ boyeon.choi ]
