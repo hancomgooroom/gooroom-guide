@@ -2,7 +2,6 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <requires lib="webkit2gtk" version="2.12"/>
   <template class="GuideWindow" parent="GtkApplicationWindow">
     <property name="can_focus">False</property>
     <property name="no_show_all">True</property>
@@ -45,30 +44,23 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkFrame" id="webview_frame">
-            <property name="width_request">900</property>
-            <property name="height_request">496</property>
+          <object class="GtkEventBox" id="event_box">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <property name="label_xalign">0</property>
-            <property name="shadow_type">none</property>
+            <property name="above_child">True</property>
             <child>
-              <object class="WebKitWebView" id="webview">
+              <object class="GtkImage" id="image_frame">
+                <property name="width_request">900</property>
+                <property name="height_request">496</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <signal name="context-menu" handler="guide_window_webview_context_menu" object="GuideWindow" swapped="no"/>
-                <signal name="load-changed" handler="guide_window_webview_load_changed" object="GuideWindow" swapped="no"/>
-                <child>
-                  <placeholder/>
-                </child>
+                <property name="can_focus">False</property>
+                <property name="stock">gtk-missing-image</property>
               </object>
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
         </child>

@@ -1,0 +1,14 @@
+{
+    "paths":[
+        "/1_intro.svg",
+        "/2_information.svg",
+        "/3_desktop.svg",
+        "/4_systemtray.svg",
+        "/5_window.svg",
+        "/6_notification.svg",
+        "/7_browser.svg",
+        "/8_basicapps.svg",
+        "/9_security.svg",
+        "/10_finish.svg"
+    ]
+}

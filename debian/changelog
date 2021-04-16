@@ -1,3 +1,40 @@
+gooroom-guide (0.4.1+grm2u1+han2u3) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [214279ef] Connected to Hancom Gooroom official website, not Gooroom
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Sat, 03 Apr 2021 15:57:49 +0900
+
+gooroom-guide (0.4.1+grm2u1+han2u2) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [b67a399f] Changed desktop file for Korean Launcher icon
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Fri, 02 Apr 2021 12:25:07 +0900
+
+gooroom-guide (0.4.1+grm2u1+han2u1) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [0641a1ee] Set gooroom-guide to open frome the center of the primary monitor
+  * [bfc5c068] Changed the webview to GtkImage
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Thu, 01 Apr 2021 12:53:39 +0900
+
+gooroom-guide (0.4.0+grm2u1+han2u1) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [db5242a0] English guide initialization
+  * [b5fbb471] [Bug:3100]Removed the flash that appears when clicked
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Thu, 18 Mar 2021 11:03:03 +0900
+
+gooroom-guide (0.3.8+grm2u1+han2u1) unstable; urgency=medium
+  
+  [ HaeRyong Jeong ]
+  * [8c818283] Updated copyright
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Fri, 31 Jul 2020 11:07:05 +0900
+
 gooroom-guide (0.3.7+grm2u1+han2u1) unstable; urgency=medium
 
   [ Haeryong Jeong ]
