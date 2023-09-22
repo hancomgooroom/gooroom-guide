@@ -2,7 +2,7 @@ project(
   'gooroom-guide', 'c',
   version : '1.0.0',
   license : 'GPL2+',
-  meson_version : '>=0.43.0'
+  meson_version : '>=0.47.0'
 )
 
 guide_prefix = get_option('prefix')

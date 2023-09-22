@@ -1,6 +1,6 @@
 po_dir = join_paths (meson.source_root (), 'po')
 
-desktop_autostart = i18n.merge_file ('desktop-autostart',
+desktop_autostart = i18n.merge_file (
                                      input: 'gooroom-guide.autostart.desktop.in',
                                      output: 'gooroom-guide.autostart.desktop',
                                      install: true,
