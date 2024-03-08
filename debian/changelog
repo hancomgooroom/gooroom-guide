@@ -1,3 +1,10 @@
+gooroom-guide (4.0.0+grm4u1) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [d08b3bb7] Gooroom 4.0 Initialize
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Fri, 08 Mar 2024 18:47:52 +0900
+
 gooroom-guide (3.1.0+grm3u1) unstable; urgency=medium
 
   [ boyeon.choi ]
