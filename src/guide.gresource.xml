@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/gooroom/guide">
+    <file compressed="true" alias="styles.css">data/guide-window.css</file>
+  </gresource>
+
+  <gresource prefix="/org/gooroom/guide">
     <file alias="guide.ui" preprocess="xml-stripblanks">data/guide-window.ui</file>
-    <file alias="styles.css">data/guide-window.css</file>
-    <file alias="next-arrow.svg">data/ic-arrow-next-rest.svg</file>
-    <file alias="back-arrow.svg">data/ic-arrow-back-rest.svg</file>
+    <file alias="info_kor.jpg">data/info_kor.jpg</file>
+    <file alias="info_eng.jpg">data/info_eng.jpg</file>
+    <file alias="checked.svg">data/ic-checkbox.svg</file>
+    <file alias="unchecked.svg">data/ic-uncheck.svg</file>
+    <file alias="next.svg">data/next.svg</file>
   </gresource>
 </gresources>

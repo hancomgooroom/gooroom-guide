@@ -39,28 +39,11 @@
 struct _GuideWindow
 {
   GtkApplicationWindow     parent;
-  GtkWidget               *header_bar;
 
-  GtkWidget               *bar_stack;
-  GtkWidget               *start_bar;
-  GtkWidget               *content_bar;
-  GtkWidget               *end_bar;
-  GtkWidget               *auto_start_check;
-  GtkWidget               *begin_button;
-  GtkWidget               *close_button;
-  GtkWidget				  *guide_overlay;
-
-  GtkWidget               *event_box;
-  GtkImage                *image_frame;
-  GtkWidget               *page_label;
-
-  GdkCursor               *pointer_cursor;
-  GdkCursor               *default_cursor;
-
-  GArray                  *order_list;
-
-  int                      index;                // current page index
-  int                      total;                  // total guide page index
+  GtkWidget *auto_start_check;
+  GtkWidget *overlay;
+  GtkWidget *btn_startgrm;
+  GtkImage  *image_frame;
 };
 
 typedef enum {
@@ -100,44 +83,6 @@ guide_window_present (gpointer user_data)
 }
 
 static void
-set_page_label (GuideWindow *self)
-{
-  gchar *page = g_strdup_printf ("%d / %d", self->index, self->total);
-
-  gtk_label_set_label (GTK_LABEL (self->page_label), page);
-  g_free (page);
-}
-
-static void
-load_image (int index, GuideWindow *self)
-{
-  gchar *uri = NULL;
-  GdkPixbuf *pixbuf;
-  GError *error = NULL;
-
-  uri = g_array_index (self->order_list, gchar *, index);
-  self->index = index;
-
-  pixbuf = gdk_pixbuf_new_from_file (uri,error);
-
-  if (index == 0)
-	  gtk_stack_set_visible_child (GTK_STACK (self->bar_stack), self->start_bar);
-  
-
-  if (pixbuf == NULL) {
-      g_print ("Error loading file: #%d %s\n", error->code, error->message);
-      g_error_free (error);
-      exit (1);
-  }
-
-  gtk_image_set_from_pixbuf (self->image_frame,
-		  gdk_pixbuf_scale_simple (pixbuf, 890, 540, GDK_INTERP_NEAREST));
-
-  set_page_label(self);
-  guide_window_present(self);
-}
-
-static void
 open_help (GtkAccelGroup *accel,
            GObject *acceleratoable,
            guint keyval,
@@ -166,44 +111,7 @@ guide_window_accel_init(GtkWindow *window, gpointer uer_data)
 static void
 guide_window_event_box_button_press_cb(GuideWindow *self, GtkEventBox *box)
 {
-  if (self->index == self->total+1)
-    g_spawn_command_line_async ("/usr/bin/xdg-open https://www.gooroom.kr/", NULL);
-}
-
-static void
-guide_window_clicked_prev (GtkButton* button, GuideWindow *self)
-{
-  int index = self->index;
-  int total = self->total;
-
-  load_image (--index, self);
-
-  if (index == 0)
-  {
-      gtk_stack_set_visible_child (GTK_STACK (self->bar_stack), self->start_bar);
-  }
-  else if (index == total)
-      gtk_stack_set_visible_child (GTK_STACK (self->bar_stack), self->content_bar);
-}
-
-static void
-guide_window_clicked_next (GtkButton* button, GuideWindow *self)
-{
-  if (self->index == 0)
-    gtk_stack_set_visible_child (GTK_STACK (self->bar_stack), self->content_bar);
-
-  // If last page that disable next button
-  if (self->index == self->total)
-    gtk_stack_set_visible_child (GTK_STACK (self->bar_stack), self->end_bar);
-
-  load_image(++self->index, self);
-  
-}
-
-static void
-clear_tocs (gchar **item)
-{
-  g_strfreev (item);
+  g_spawn_command_line_async ("/usr/bin/xdg-open https://www.hancom.com/product/productGooroomMain.do", NULL);
 }
 
 gchar*
@@ -242,112 +150,13 @@ END:
   return result;
 }
 
-static gboolean
-get_image_list(GuideWindow *self)
-{
-  g_autofree gchar *toc_path = NULL;
-  g_autofree gchar *toc = NULL;
-  g_autoptr(GError) error = NULL;
-  JsonParser *parser;
-  JsonObject *ro;
-  JsonObjectIter iter;
-  JsonArray *array;
-  g_autofree gchar *lang = get_language ();
-
-  int cnt = 0, length = 0;
-
-  toc_path = g_strdup_printf ("%s", PACKAGE_GUIDEDIR);
-  toc = g_strdup_printf ("%s/%s", toc_path, "order");
-  if (!g_file_test (toc, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))
-    return FALSE;
-
-  parser = json_parser_new ();
-
-  if (!json_parser_load_from_file (parser, toc, &error))
-  {
-    g_error ("%s", error->message);
-    return FALSE;
-  }
-
-  ro = json_node_get_object (json_parser_get_root (parser));
-  array = json_object_get_array_member (ro, "paths");
-
-  length = json_array_get_length (array);
-  self->total = length - 2;
-
-  self->order_list = g_array_new (TRUE, TRUE, sizeof (gchar *));
-  g_array_set_clear_func (self->order_list, (GDestroyNotify) clear_tocs);
-
-  while (cnt < length)
-  {
-    const gchar *content = json_array_get_string_element (array, cnt);
-    gchar *path = g_strdup_printf ("%s/%s%s", toc_path, lang, content);
-
-    g_array_append_val (self->order_list, path);
-
-    cnt++;
-  }
-
-  load_image (0, self);
-
-  return TRUE;
-}
-
-static void
-init_cursor (GuideWindow *self)
-{
-  GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (self));
-  GdkDisplay *display = gdk_screen_get_display (screen);
-  self->default_cursor = gdk_cursor_new_from_name (display, "default");
-  self->pointer_cursor = gdk_cursor_new_from_name (display, "pointer");
-}
-
-static gboolean
-set_cursor (GuideWindow *self, CursorTypeEnum type)
-{
-  GdkCursor *cursor = NULL;
-  GdkWindow *window = NULL;
-
-  switch (type) {
-    case CURSOR_DEFAULT:
-      cursor = self->default_cursor;
-    break;
-    case CURSOR_POINTER:
-      cursor = self->pointer_cursor;
-    break;
-  }
-
-  window = gtk_widget_get_window (GTK_WIDGET (self));
-  gdk_window_set_cursor (window, cursor);
-
-  return FALSE;
-}
-
-static gboolean
-guide_window_enter_button (GtkButton *button, GdkEvent *event, GuideWindow *self)
-{
-  return set_cursor (self, CURSOR_POINTER);
-}
-
-static gboolean
-guide_window_leave_button (GtkButton *button, GdkEvent *event, GuideWindow *self)
-{
-  return set_cursor (self, CURSOR_DEFAULT);
-}
-
-static void
-guide_window_click_close (GtkButton* button, GuideWindow *self)
-{
-  gtk_window_close (GTK_WINDOW (self));
-}
-
 void
 guide_window_activate (GuideWindow *self)
 {
-  gboolean              show_at_begin = FALSE;
-  gchar                *norun;
-
-  gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (self->header_bar), TRUE);
+  gboolean  show_at_begin = FALSE;
+  GtkWidget	*check_button;
+  gchar *norun;
+  gchar *lang;
 
   // ------------ norun check ------------
   norun = get_norun_file_path ();
@@ -356,8 +165,12 @@ guide_window_activate (GuideWindow *self)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->auto_start_check), show_at_begin);
 
-  get_image_list(self);
-  init_cursor (self);
+  lang = g_strdup (get_language());
+
+  if (g_str_equal (lang, "en"))
+    gtk_image_set_from_resource(GTK_IMAGE (self->image_frame), "/org/gooroom/guide/info_eng.jpg" );
+  else 
+    gtk_image_set_from_resource(GTK_IMAGE (self->image_frame), "/org/gooroom/guide/info_kor.jpg" );
 }
 
 static void
@@ -366,9 +179,6 @@ guide_window_dispose (GObject *obj)
   GuideWindow *self = GUIDE_WINDOW (obj);
 
   G_OBJECT_CLASS (guide_window_parent_class)->dispose (obj);
-
-  g_clear_object (&self->default_cursor);
-  g_clear_object (&self->pointer_cursor);
 }
 
 static void
@@ -399,11 +209,6 @@ guide_window_constructed (GObject *obj)
 
   point.x = geo.x + geo.width/2 - req.width/2;
   point.y = geo.y + geo.height/2 - req.height/2;
-
-  if (geo.width <= req.width || geo.height <= req.height)
-    gtk_widget_set_size_request (GTK_WIDGET (self->image_frame), MINIMUM_WIDTH, MINIMUM_HEIGHT);
-
-  gtk_window_move (self,point.x ,point.y );
 }
 
 static void
@@ -419,25 +224,10 @@ guide_window_class_init (GuideWindowClass *class)
   gtk_widget_class_set_template_from_resource (widget_class, 
                                                "/org/gooroom/guide/guide.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, header_bar);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, bar_stack);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, start_bar);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, content_bar);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, end_bar);
   gtk_widget_class_bind_template_child (widget_class, GuideWindow, auto_start_check);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, page_label);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, event_box);
   gtk_widget_class_bind_template_child (widget_class, GuideWindow, image_frame);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, begin_button);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, close_button);
-  gtk_widget_class_bind_template_child (widget_class, GuideWindow, guide_overlay);
-
-  gtk_widget_class_bind_template_callback (widget_class, guide_window_clicked_prev);
-  gtk_widget_class_bind_template_callback (widget_class, guide_window_clicked_next);
-  gtk_widget_class_bind_template_callback (widget_class, guide_window_check_show_at_begin);
-  gtk_widget_class_bind_template_callback (widget_class, guide_window_click_close);
-  gtk_widget_class_bind_template_callback (widget_class, guide_window_enter_button);
-  gtk_widget_class_bind_template_callback (widget_class, guide_window_leave_button);
+  gtk_widget_class_bind_template_child (widget_class, GuideWindow, overlay);
+  gtk_widget_class_bind_template_child (widget_class, GuideWindow, btn_startgrm);
 }
 
 static void
@@ -456,13 +246,11 @@ guide_window_init (GuideWindow *self)
 
   guide_window_accel_init (self, NULL);
 
-
-  gtk_overlay_add_overlay (GTK_OVERLAY(self->guide_overlay), self->bar_stack);
-
-  g_signal_connect_swapped (self->event_box, "button-press-event",
-							(GCallback)guide_window_event_box_button_press_cb, self);
-
   g_object_unref (provider);
+  g_signal_connect (GTK_BUTTON (self->btn_startgrm) , "clicked",
+					(GCallback)guide_window_event_box_button_press_cb, self);
+  g_signal_connect (GTK_BUTTON (self->auto_start_check) , "toggled",
+					(GCallback)guide_window_check_show_at_begin, self);
 
   return;
 }

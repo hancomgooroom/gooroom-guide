@@ -1,21 +1,31 @@
-button.begin-button,
-button.close-button {
-  background-color: #3e6ddc;
-  color: white;
-  border-radius: 10px;
-}
+.gooroom {
+  border-radius: 70px;
+  border: 1px solid rgba(0, 0, 0, 1.0) ;
+  
+  background-color: rgba(0, 0, 0, 0.0); 
+  color: #000000; }
+.gooroom:hover {
+  background-color: rgba(0, 0, 0, 0.2); 
+  color: #000000; }
+.gooroom:active {
+  background-color: rgba(0, 0, 0, 1.0); 
+  color: #FFFFFF; }
 
-button.navi-button {
-  background-color: transparent;
-  border-radius: 8px;
-  border: none;
-  box-shadow: none;
-} button.navi-button:hover {
-  background-color: inherit;
-  border: none;
-}
-
-.bar-stack {
-  background-color: rgba(255,255,255,0.8);
-  border-radius: 8px;
-}
+.id-remember-button check {
+  -gtk-icon-source: url("unchecked.svg");
+  -gtk-icon-shadow: none; }
+.id-remember-button check:hover {
+  -gtk-icon-source: url("unchecked.svg");
+  -gtk-icon-shadow: none; }
+.id-remember-button check:active {
+  -gtk-icon-source: url("unchecked.svg");
+  -gtk-icon-shadow: none; }
+.id-remember-button check:checked {
+  -gtk-icon-source: url("checked.svg");
+  -gtk-icon-shadow: none; }
+.id-remember-button check:checked:hover {
+  -gtk-icon-source: url("checked.svg");
+  -gtk-icon-shadow: none; }
+.id-remember-button check:checked:active {
+  -gtk-icon-source: url("checked.svg");
+  -gtk-icon-shadow: none; }

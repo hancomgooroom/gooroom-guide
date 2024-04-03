@@ -42,3 +42,6 @@ msgstr "시작하기"
 #: guide.ui:83
 msgid "Run at startup"
 msgstr "시작할 때 시작하기"
+
+msgid "Learn More"
+msgstr "구름 자세히 알아보기"

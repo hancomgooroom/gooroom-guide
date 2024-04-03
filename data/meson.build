@@ -16,8 +16,3 @@ desktop_file = i18n.merge_file(
   install_dir: join_paths(get_option('datadir'), 'applications')
                
 )
-
-install_subdir(
-  'guide',
-  install_dir : join_paths(guide_datadir, 'gooroom-guide')
-)

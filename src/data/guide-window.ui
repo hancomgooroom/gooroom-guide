@@ -1,383 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <template class="GuideWindow" parent="GtkApplicationWindow">
+    <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="no-show-all">True</property>
-    <property name="border-width">5</property>
     <property name="resizable">False</property>
     <property name="window-position">center</property>
     <property name="show-menubar">False</property>
     <child>
-      <object class="GtkOverlay" id="guide_overlay">
+      <object class="GtkScrolledWindow">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can-focus">True</property>
+        <property name="shadow-type">in</property>
+        <property name="min-content-width">890</property>
+        <property name="min-content-height">620</property>
+        <property name="max-content-width">890</property>
+        <property name="max-content-height">620</property>
         <child>
-          <object class="GtkEventBox" id="event_box">
+          <object class="GtkViewport">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="above-child">True</property>
             <child>
-              <object class="GtkImage" id="image_frame">
-                <property name="width-request">890</property>
-                <property name="height-request">540</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="halign">start</property>
-                <property name="valign">start</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="index">-1</property>
-          </packing>
-        </child>
-        <child type="overlay">
-          <object class="GtkStack" id="bar_stack">
-            <property name="height-request">54</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="valign">end</property>
-            <property name="border-width">2</property>
-            <child>
-              <object class="GtkBox" id="start_bar">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="spacing">10</property>
-                <child>
-                  <object class="GtkCheckButton" id="auto_start_check">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="margin-left">20</property>
-                    <property name="margin-start">20</property>
-                    <property name="margin-top">19</property>
-                    <property name="margin-bottom">19</property>
-                    <property name="draw-indicator">True</property>
-                    <signal name="enter-notify-event" handler="guide_window_enter_button" object="GuideWindow" swapped="no"/>
-                    <signal name="leave-notify-event" handler="guide_window_leave_button" object="GuideWindow" swapped="no"/>
-                    <signal name="toggled" handler="guide_window_check_show_at_begin" object="GuideWindow" swapped="no"/>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="margin-left">10</property>
-                        <property name="margin-start">10</property>
-                        <property name="label" translatable="yes">Run at startup</property>
-                        <attributes>
-                          <attribute name="scale" value="0.97999999999999998"/>
-                        </attributes>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkButton" id="begin_button">
-                    <property name="width-request">120</property>
-                    <property name="height-request">34</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="halign">end</property>
-                    <property name="valign">center</property>
-                    <property name="margin-right">20</property>
-                    <property name="margin-end">20</property>
-                    <property name="margin-top">10</property>
-                    <property name="margin-bottom">10</property>
-                    <signal name="clicked" handler="guide_window_clicked_next" object="GuideWindow" swapped="no"/>
-                    <signal name="enter-notify-event" handler="guide_window_enter_button" object="GuideWindow" swapped="no"/>
-                    <signal name="leave-notify-event" handler="guide_window_leave_button" object="GuideWindow" swapped="no"/>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Start</property>
-                        <attributes>
-                          <attribute name="scale" value="0.97999999999999998"/>
-                        </attributes>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="begin-button"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="pack-type">end</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <style>
-                  <class name="bar-stack"/>
-                </style>
-              </object>
-              <packing>
-                <property name="name">page0</property>
-                <property name="title" translatable="yes">page0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="content_bar">
+              <object class="GtkOverlay" id="overlay">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
-                  <object class="GtkButton" id="prev_button">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="margin-left">20</property>
-                    <property name="margin-start">20</property>
-                    <property name="margin-top">15</property>
-                    <property name="margin-bottom">15</property>
-                    <signal name="clicked" handler="guide_window_clicked_prev" object="GuideWindow" swapped="no"/>
-                    <signal name="enter-notify-event" handler="guide_window_enter_button" object="GuideWindow" swapped="no"/>
-                    <signal name="leave-notify-event" handler="guide_window_leave_button" object="GuideWindow" swapped="no"/>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="spacing">10</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="resource">/org/gooroom/guide/back-arrow.svg</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Prev</property>
-                            <attributes>
-                              <attribute name="scale" value="0.97999999999999998"/>
-                            </attributes>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="navi-button"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="page_label">
+                  <object class="GtkImage" id="image_frame">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="label" translatable="yes">label</property>
-                    <attributes>
-                      <attribute name="scale" value="0.97999999999999998"/>
-                    </attributes>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="index">-1</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkButton" id="next_button">
+                <child type="overlay">
+                  <object class="GtkCheckButton" id="auto_start_check">
+                    <property name="label" translatable="yes">Run at startup</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
-                    <property name="margin-right">20</property>
-                    <property name="margin-end">20</property>
-                    <property name="margin-top">15</property>
-                    <property name="margin-bottom">15</property>
-                    <signal name="clicked" handler="guide_window_clicked_next" object="GuideWindow" swapped="no"/>
-                    <signal name="enter-notify-event" handler="guide_window_enter_button" object="GuideWindow" swapped="no"/>
-                    <signal name="leave-notify-event" handler="guide_window_leave_button" object="GuideWindow" swapped="no"/>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="spacing">10</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Next</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="resource">/org/gooroom/guide/next-arrow.svg</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="navi-button"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-                <style>
-                  <class name="bar-stack"/>
-                </style>
-              </object>
-              <packing>
-                <property name="name">page1</property>
-                <property name="title" translatable="yes">page1</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="end_bar">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <child>
-                  <object class="GtkButton" id="prev_button1">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="margin-left">20</property>
-                    <property name="margin-start">20</property>
-                    <property name="margin-top">15</property>
-                    <property name="margin-bottom">15</property>
-                    <signal name="clicked" handler="guide_window_clicked_prev" object="GuideWindow" swapped="no"/>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="spacing">10</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="resource">/org/gooroom/guide/back-arrow.svg</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Prev</property>
-                            <attributes>
-                              <attribute name="scale" value="0.97999999999999998"/>
-                            </attributes>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                    </child>
-                    <style>
-                      <class name="navi-button"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkButton" id="close_button">
-                    <property name="width-request">120</property>
-                    <property name="height-request">34</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
                     <property name="halign">end</property>
-                    <property name="valign">center</property>
-                    <property name="margin-right">20</property>
-                    <property name="margin-end">20</property>
-                    <property name="margin-top">10</property>
-                    <property name="margin-bottom">10</property>
-                    <signal name="clicked" handler="guide_window_click_close" object="GuideWindow" swapped="no"/>
+                    <property name="valign">start</property>
+                    <property name="border-width">20</property>
+                    <property name="draw-indicator">True</property>
+                    <style>
+                      <class name="id-remember-button"/>
+                    </style>
+                  </object>
+                </child>
+                <child type="overlay">
+                  <object class="GtkButton" id="btn_startgrm">
+                    <property name="width-request">222</property>
+                    <property name="height-request">47</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="halign">center</property>
+                    <property name="valign">end</property>
+                    <property name="margin-bottom">175</property>
+                    <property name="always-show-image">True</property>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkBox">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Close</property>
-                        <property name="justify">right</property>
-                        <attributes>
-                          <attribute name="scale" value="0.97999999999999998"/>
-                        </attributes>
+                        <property name="halign">center</property>
+                        <property name="spacing">8</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Learn More</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="resource">/org/gooroom/guide/next.svg</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
                       </object>
                     </child>
                     <style>
-                      <class name="close-button"/>
+                      <class name="gooroom"/>
                     </style>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="pack-type">end</property>
-                    <property name="position">2</property>
+                    <property name="index">1</property>
                   </packing>
                 </child>
-                <style>
-                  <class name="bar-stack"/>
-                </style>
               </object>
-              <packing>
-                <property name="name">page2</property>
-                <property name="title" translatable="yes">page2</property>
-                <property name="position">2</property>
-              </packing>
             </child>
           </object>
         </child>
-      </object>
-    </child>
-    <child type="titlebar">
-      <object class="GtkHeaderBar" id="header_bar">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="hexpand">True</property>
-        <property name="title" translatable="yes">Hancom Gooroom Quick Guide</property>
-        <property name="has-subtitle">False</property>
-        <property name="spacing">0</property>
       </object>
     </child>
   </template>
