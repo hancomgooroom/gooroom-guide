@@ -21,11 +21,11 @@ msgstr "이전으로"
 
 #: gooroom-guide.desktop.in.in:5
 msgid "Describes the features of the Gooroom platform"
-msgstr "구름플랫폼의 기능을 설명합니다."
+msgstr "한컴구름의 기능을 설명합니다."
 
 #: gooroom-guide.desktop.in.in:4 guide.ui:30
 msgid "Gooroom Guide"
-msgstr "구름 가이드"
+msgstr "한컴구름 가이드"
 
 #: guide.ui:209
 msgid "Close"
@@ -44,4 +44,4 @@ msgid "Run at startup"
 msgstr "시작할 때 시작하기"
 
 msgid "Learn More"
-msgstr "구름 자세히 알아보기"
+msgstr "한컴구름 자세히 알아보기"
