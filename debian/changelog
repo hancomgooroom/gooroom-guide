@@ -1,3 +1,11 @@
+gooroom-guide (4.0.0+grm4u1+han4u1) unstable; urgency=medium
+
+  [ boyeon.choi ]
+  * [d1f434e9] Init Hancom Gooroom V4
+  * [8f4510bf] [HGOOROOM-2302] Change the term '구름' to '한컴구름'
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Thu, 29 Aug 2024 12:29:28 +0900
+
 gooroom-guide (4.0.0+grm4u1) unstable; urgency=medium
 
   [ boyeon.choi ]
